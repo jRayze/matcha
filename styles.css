@@ -1,0 +1,11 @@
+
+body {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.form-signin {
+    max-width: 420px !important;
+    margin:auto;
+}
