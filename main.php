@@ -7,7 +7,8 @@
         }
     }
     spl_autoload_register('classAutoLoader');
-    include ('start.php');
-    include ('login.php');
-    include ('end.php');
+    include ('template/start.php');
+    include ('template/header.php');
+    include ('login/login.php');
+    include ('template/end.php');
 ?>
