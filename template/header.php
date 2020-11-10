@@ -26,7 +26,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-column mb-2 mb-lg-0">
-                            <h5 class="dropdown-header">Matchs</h5>
+                            <h5 class="dropdown-header">Vues</h5>
                                 <div id="listeVue">
                                     <a class="dropdown-item" href="#">
                                         <img class="image-circle" alt="100x100" src="../img/lachatteatamere.jpg" data-holder-rendered="true">

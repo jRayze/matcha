@@ -8,6 +8,16 @@
     right: 0;
     bottom: 0;
     left: 0;
+    background-image: url(https://fermelamarmotte.fr/images/c97b843dd9a2f2443fa42ebe707c14d1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: contrast(0.5);
+    margin:0;
+    padding:0;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
 }
 
 .form-signin {
