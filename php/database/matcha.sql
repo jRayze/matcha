@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `family_name_list` (
   `name` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table matcha.family_name_list: 0 rows
+-- Dumping data for table matcha.family_name_list: 201 rows
 /*!40000 ALTER TABLE `family_name_list` DISABLE KEYS */;
 INSERT INTO `family_name_list` (`name`) VALUES
 	('Martin'),
@@ -444,20 +444,26 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(50) NOT NULL DEFAULT '0',
   `last_name` varchar(50) NOT NULL DEFAULT '0',
   `gender` varchar(50) NOT NULL DEFAULT '0',
+  `password` varchar(200) NOT NULL DEFAULT '0',
   `sexual_orientation` varchar(50) NOT NULL DEFAULT '0',
-  `bio` tinytext NOT NULL,
-  `interests` tinytext NOT NULL,
-  `image1` text NOT NULL,
-  `image2` text NOT NULL,
-  `image3` text NOT NULL,
-  `image4` text NOT NULL,
-  `image5` text NOT NULL,
+  `bio` tinytext,
+  `interests` tinytext,
+  `image1` text,
+  `image2` text,
+  `image3` text,
+  `image4` text,
+  `mail_url` varchar(200) DEFAULT NULL,
+  `verified` tinyint(4) DEFAULT '0',
+  `image5` text,
   `profile_image` tinyint(4) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table matcha.users: 0 rows
+-- Dumping data for table matcha.users: 1 rows
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `verified`, `image5`, `profile_image`) VALUES
+	(2, 'test@test.test', 'test', 'test', 'test', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, -1),
+	(3, 'virgile.desvaux@gmail.com', 'zwokaros', '0', '0', '0', '$2y$10$etNdT2T0WDcE17a4h/TSjOYLTBKnxIXo.yTr.70ENdw.jYBFzldpK', '0', NULL, NULL, NULL, NULL, NULL, NULL, '', 1, NULL, -1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
