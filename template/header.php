@@ -44,7 +44,7 @@
         </li>
         </ul>
         <div class="d-flex align-items-end flex-column " style="flex: auto;">
-            <a class="nav-link" href="#">Se déconnecter</a>
+            <a class="nav-link" href="/logout/logout.php">Se déconnecter</a>
         </div>
     </div>
     </nav>
