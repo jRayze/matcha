@@ -15,6 +15,23 @@
     margin:auto;
 }
 
+.bodyRegister {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.form-register {
+    max-width: 420px !important;
+    margin:auto;
+}
+
 .navigbar {
     display: block;
 }
