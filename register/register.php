@@ -3,43 +3,44 @@ include "../template/start.php";
 ?>
 <!-- Formulaire demande : Nom, prénom, e-mail, psoeudo, mot de passe sécurisé -->
 <body class="bodyRegister">
-    <form class="form-register">
+    <form class="form-register" action="/php/account/create_account.php" method="post">
         <h1>Enregistrez vous !</h1>
         <h5>Discutez avec plusieurs milliers d'utilisateur et faites leurs rencontres !</h5>
         <br >
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Nom</label>
-                <input type="email" class="form-control" id="inputEmail4">
+                <label for="inputLastName">Nom</label>
+                <input name="lastname" type="text" class="form-control" id="inputLastName">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputPassword4">Prénom</label>
-                <input type="password" class="form-control" id="inputPassword4">
+                <label for="inputFirstName">Prénom</label>
+                <input name="firstname" type="text" class="form-control" id="inputFirstName">
             </div>
         </div>
         <div class="form-group">
-                <label for="inputPassword4">Identifiant</label>
-                <input type="password" class="form-control" id="inputPassword4">
+                <label for="inputUsername">Identifiant</label>
+                <input name="username" type="text" class="form-control" id="inputUsername">
             </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Adresse E-mail</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <label for="inputEmail">Adresse E-mail</label>
+            <input name="email" type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
         </div>
         <div class="form-group">
-            <label for="inputPassword5">Mot de passe</label>
-            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+            <label for="inputPassword">Mot de passe</label>
+            <input name="password" type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock">
             <small id="passwordHelpBlock" class="form-text text-muted">
-            Votre mot de passe doit contenir entre 8 et 20 caractères, contenir des lettres ainsi que des nombres et au minimum un caractère spécial.
+                Votre mot de passe doit contenir entre 8 et 20 caractères, contenir des lettres ainsi que des nombres et au minimum un caractère spécial.
             </small>
         </div>
         <div class="form-group">
         </div>
         <div class="form-group row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                <button id="submitButton" disabled type="submit" class="btn btn-primary">S'inscrire</button>
             </div>
         </div>
     </form>
+    <script src="/js/register.js"></script>
 </body>
 <?php
 include "../template/end.php";
