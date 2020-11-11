@@ -32,7 +32,7 @@ include "../template/start.php";
                 Votre mot de passe doit contenir entre 8 et 20 caractères, contenir des lettres ainsi que des nombres et au minimum un caractère spécial.
             </small>
         </div>
-        <div class="form-group">
+        <div class="form-group error-text" id="registrationErrors">
         </div>
         <div class="form-group row">
             <div class="col-sm-12">

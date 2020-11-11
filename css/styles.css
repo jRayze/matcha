@@ -53,3 +53,13 @@
     border-radius:50%;
     margin-right: 5px;
 }
+
+.error-text {
+    color:red;
+    font-weight: bold;
+}
+
+.success-text {
+    color:green;
+    font-weight: bold;
+}

@@ -459,11 +459,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table matcha.users: 1 rows
+-- Dumping data for table matcha.users: 2 rows
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `verified`, `image5`, `profile_image`) VALUES
-	(2, 'test@test.test', 'test', 'test', 'test', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, -1),
-	(3, 'virgile.desvaux@gmail.com', 'zwokaros', '0', '0', '0', '$2y$10$etNdT2T0WDcE17a4h/TSjOYLTBKnxIXo.yTr.70ENdw.jYBFzldpK', '0', NULL, NULL, NULL, NULL, NULL, NULL, '', 1, NULL, -1);
+	(6, 'virgile.desvaux@gmail.com', 'zwokaros', 'Desvaux', 'Virgile', '0', '$2y$10$6IqjD3CPpOWHzj6D/53Jz.ydus0iEYyK6ezzFhKlUClRty3Yzt2Mu', '0', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$uNQqnz7VHSxxjhyU2WGWdOUHdOVthWeIFxwUDmQ0K..vXtoPcIS4.', 0, NULL, -1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

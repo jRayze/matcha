@@ -45,6 +45,10 @@ function checkInputs() {
             if (this.readyState == 4 && this.status == 200) {
                 var result = JSON.parse(this.responseText);
                 console.log(result);
+                document.getElementById("registrationErrors").innerHTML = "";
+                result.registration_error.forEach(el => {
+                    document.getElementById("registrationErrors").innerHTML += '<div class="row text-center">' + el + '</div>';
+                })
                 if (result.valid) {
                     document.getElementById("submitButton").disabled = false;
                 } else {

@@ -1,6 +1,6 @@
 <?php
 include "../database/sql.php";
-
+session_start();
 $result;
 $result["valid"] = true;
 
@@ -70,7 +70,7 @@ if ($result["valid"]) {
     $bdd = get_connection();
     $hashed_pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
     $mail_url = password_hash($_POST["email"], PASSWORD_DEFAULT);
-    $stmt = $bdd->prepare("INSERT INTO users (username, email, password, verified, mail_url) VALUES ('$_POST[username]', '$_POST[email]', '$hashed_pass', 0, '$mail_url');");
+    $stmt = $bdd->prepare("INSERT INTO users (first_name, last_name, username, email, password, verified, mail_url) VALUES ('$_POST[firstname]', '$_POST[lastname]', '$_POST[username]', '$_POST[email]', '$hashed_pass', 0, '$mail_url');");
     $stmt->execute();
 
     $message = '
@@ -89,5 +89,8 @@ if ($result["valid"]) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
      
     mail($_POST["email"], 'Matcha email verification', $message, $headers);
+    $_SESSION["account_created"] = true;
+    $_SESSION["account_email"] = $_POST["email"];
+    header('Location: /login/login.php');
 }
 ?>
