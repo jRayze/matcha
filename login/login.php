@@ -31,7 +31,7 @@ session_start();
         <label for="inputPassword" class="sr-only">Mot de Passe</label>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
         <button class="btn btn-m btn-primary btn-block" id="marge-bot" type="submit">Se connecter</button>
-        <a href="#">Mot de passe oublié ?</a>
+        <a href="http://localhost/matcha/login/recoverPassword.php">Mot de passe oublié ?</a>
         <br >
         <a href="/register/register.php">S'inscrire</a>
         <p class="mt-5 mb-3 text-muted">© 2020</p>
