@@ -44,11 +44,29 @@
     right: 0;
     bottom: 0;
     left: 0;
+
+    /*background */
+    background-image: url(https://www.psychonet.fr/wp-content/uploads/2018/10/La-rencontre-amoureuse-780x450.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: contrast(0.5) blur(5px);
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    margin:0;
+    padding:0;
 }
 
 .form-register {
     max-width: 420px !important;
     margin:auto;
+
+    background-color: white;
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 20px 20px 15px darkslategrey;
 }
 
 .navigbar {
