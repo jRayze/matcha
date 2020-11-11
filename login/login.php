@@ -30,7 +30,7 @@ session_start();
         ?>">
         <label for="inputPassword" class="sr-only">Mot de Passe</label>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
-        <button class="btn btn-m btn-primary btn-block" type="submit">Se connecter</button>
+        <button class="btn btn-m btn-primary btn-block" id="marge-bot" type="submit">Se connecter</button>
         <a href="#">Mot de passe oublié ?</a>
         <br >
         <a href="/register/register.php">S'inscrire</a>

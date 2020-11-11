@@ -1,4 +1,5 @@
 .bodyLogin {
+
     text-align: center;
     display: flex;
     align-items: center;
@@ -8,22 +9,30 @@
     right: 0;
     bottom: 0;
     left: 0;
+    /*background */
     background-image: url(https://fermelamarmotte.fr/images/c97b843dd9a2f2443fa42ebe707c14d1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: contrast(0.5);
-    margin:0;
-    padding:0;
+    backdrop-filter: contrast(0.5) blur(5px);
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
-    background-color: #464646;
+
+    margin:0;
+    padding:0;
 }
 
 .form-signin {
     max-width: 420px !important;
     margin:auto;
+
+    background-color: white;
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 20px 20px 15px darkslategrey;
 }
+
 
 .bodyRegister {
     text-align: center;
@@ -62,4 +71,8 @@
 .success-text {
     color:green;
     font-weight: bold;
+}
+
+#marge-bot {
+    margin-bottom: 5px;
 }
