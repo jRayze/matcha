@@ -39,6 +39,7 @@ include "../template/start.php";
                 <button id="submitButton" disabled type="submit" class="btn btn-primary">S'inscrire</button>
             </div>
         </div>
+        <a href="/login/login.php">Déjà inscrit? Se connecter</a>
     </form>
     <script src="/js/register.js"></script>
 </body>
