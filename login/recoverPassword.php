@@ -6,12 +6,18 @@ session_start();
     <form class="form-signin" action="/php/account/recover_password.php" method="post">
         <label class="error-text">
             <?php
-            
+                if (isset($_SESSION["recover_password_error"])) {
+                    echo $_SESSION["recover_password_error"];
+                    unset($_SESSION["recover_password_error"]);
+                }
             ?>
         </label>
         <label class="success-text">
             <?php
-            
+                if (isset($_SESSION["recover_password_success"])) {
+                    echo $_SESSION["recover_password_success"];
+                    unset($_SESSION["recover_password_success"]);
+                }
             ?>
         </label>
         <h1 class="h3 mb-3 font-weight-normal">Récupérez votre mot de passe.</h1>
