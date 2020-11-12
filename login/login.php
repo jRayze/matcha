@@ -14,6 +14,10 @@ session_start();
         </label>
         <label class="success-text">
             <?php
+            if (isset($_SESSION["password_updated"])) {
+                echo $_SESSION["password_updated"];
+                unset($_SESSION["password_updated"]);
+            }
             if (isset($_SESSION["account_created"]) && $_SESSION["account_created"] === true) {
                 echo "Account created! Check your emails";
                 unset($_SESSION["account_created"]);

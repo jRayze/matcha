@@ -453,16 +453,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `image3` text,
   `image4` text,
   `mail_url` varchar(200) DEFAULT NULL,
+  `password_recovery_url` varchar(200) DEFAULT NULL,
   `verified` tinyint(4) DEFAULT '0',
   `image5` text,
   `profile_image` tinyint(4) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table matcha.users: 2 rows
+-- Dumping data for table matcha.users: 1 rows
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `verified`, `image5`, `profile_image`) VALUES
-	(6, 'virgile.desvaux@gmail.com', 'zwokaros', 'Desvaux', 'Virgile', '0', '$2y$10$6IqjD3CPpOWHzj6D/53Jz.ydus0iEYyK6ezzFhKlUClRty3Yzt2Mu', '0', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$uNQqnz7VHSxxjhyU2WGWdOUHdOVthWeIFxwUDmQ0K..vXtoPcIS4.', 0, NULL, -1);
+INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `password_recovery_url`, `verified`, `image5`, `profile_image`) VALUES
+	(6, 'virgile.desvaux@gmail.com', 'zwokaros', 'Desvaux', 'Virgile', '0', '$2y$10$iFbKHtCSDqm0Ikix69g9dO4tgwN2nU7hptih6XJzB57Hc9YsLhPtS', '0', NULL, NULL, NULL, NULL, NULL, NULL, '', '', 1, NULL, -1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
