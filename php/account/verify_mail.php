@@ -13,7 +13,11 @@ if (isset($_GET["username"]) && isset($_GET["key"])) {
             echo "Your account has been verified";
             $stmt2 = $bdd->prepare("UPDATE users SET verified=1,mail_url='' WHERE username='$_GET[username]';");
             $stmt2->execute();
+        } else {
+            echo "Invalid url";
         }
+    } else {
+        echo "Invalid url";
     }
 }
 ?>

@@ -28,6 +28,6 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
 if (isset($_SESSION["login_error"])) {
     header('Location: /login/login.php');
 } else {
-    header('Location: /index.php');
+    header('Location: /');
 }
 ?>
