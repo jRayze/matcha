@@ -14,6 +14,7 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                 $_SESSION["user"] = $query["username"];
                 $_SESSION["user_id"] = $query["id"];
                 $_SESSION["user_mail"] = $query["email"];
+                $_SESSION["body_page"] = "accueil/accueil.php";
             } else {
                 $_SESSION["login_error"] = "Invalid email / password";
             }
