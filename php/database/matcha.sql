@@ -436,6 +436,48 @@ INSERT INTO `first_name_list` (`gender`, `name`) VALUES
 	('f', 'Elise');
 /*!40000 ALTER TABLE `first_name_list` ENABLE KEYS */;
 
+-- Dumping structure for table matcha.notif_likes
+CREATE TABLE IF NOT EXISTS `notif_likes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dateadded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `from_user` int(11) NOT NULL DEFAULT '0',
+  `to_user` int(11) NOT NULL DEFAULT '0',
+  `seen` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
+
+-- Dumping data for table matcha.notif_likes: 0 rows
+/*!40000 ALTER TABLE `notif_likes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notif_likes` ENABLE KEYS */;
+
+-- Dumping structure for table matcha.notif_matches
+CREATE TABLE IF NOT EXISTS `notif_matches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dateadded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `from_user` int(11) NOT NULL DEFAULT '0',
+  `to_user` int(11) NOT NULL DEFAULT '0',
+  `seen` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
+
+-- Dumping data for table matcha.notif_matches: 0 rows
+/*!40000 ALTER TABLE `notif_matches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notif_matches` ENABLE KEYS */;
+
+-- Dumping structure for table matcha.notif_profile_views
+CREATE TABLE IF NOT EXISTS `notif_profile_views` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dateadded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `from_user` int(11) NOT NULL DEFAULT '0',
+  `to_user` int(11) NOT NULL DEFAULT '0',
+  `seen` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- Dumping data for table matcha.notif_profile_views: 2 rows
+/*!40000 ALTER TABLE `notif_profile_views` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notif_profile_views` ENABLE KEYS */;
+
 -- Dumping structure for table matcha.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -455,15 +497,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `mail_url` varchar(200) DEFAULT NULL,
   `password_recovery_url` varchar(200) DEFAULT NULL,
   `verified` tinyint(4) DEFAULT '0',
+  `filter_age_min` int(11) DEFAULT '18',
+  `filter_age_max` int(11) DEFAULT '100',
+  `filter_distance_km` int(11) DEFAULT '20',
   `image5` text,
   `profile_image` tinyint(4) NOT NULL DEFAULT '-1',
+  `age` int(11) DEFAULT '-1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Dumping data for table matcha.users: 1 rows
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `password_recovery_url`, `verified`, `image5`, `profile_image`) VALUES
-	(6, 'virgile.desvaux@gmail.com', 'zwokaros', 'Desvaux', 'Virgile', '0', '$2y$10$iFbKHtCSDqm0Ikix69g9dO4tgwN2nU7hptih6XJzB57Hc9YsLhPtS', '0', NULL, NULL, NULL, NULL, NULL, NULL, '', '', 1, NULL, -1);
+INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `gender`, `password`, `sexual_orientation`, `bio`, `interests`, `image1`, `image2`, `image3`, `image4`, `mail_url`, `password_recovery_url`, `verified`, `filter_age_min`, `filter_age_max`, `filter_distance_km`, `image5`, `profile_image`, `age`) VALUES
+	(6, 'virgile.desvaux@gmail.com', 'zwokaros', 'Desvaux', 'Virgile', '0', '$2y$10$iFbKHtCSDqm0Ikix69g9dO4tgwN2nU7hptih6XJzB57Hc9YsLhPtS', '0', NULL, NULL, NULL, NULL, NULL, NULL, '', '', 1, 18, 100, 20, NULL, -1, -1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
