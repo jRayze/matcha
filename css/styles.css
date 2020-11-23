@@ -193,7 +193,7 @@ input[type=range]#input-right::-webkit-slider-thumb {
 
 input[type=range]#input-left::-webkit-slider-thumb {
 	pointer-events: all;
-	width: 30px;
+	width: 40px;
     height: 20px;
 	border-radius: 0;
 	border: 0 none;
@@ -249,6 +249,17 @@ input[type=range]#input-left::-webkit-slider-thumb {
 
 }
 
+#ageMin {
+    font-size: 12px;
+    text-align: left;
+    display: inline-flex;
+}
+
+#ageMax {
+    font-size: 12px;
+    text-align: right;
+    display: inline-flex;
+}
 
 /***loader ****/
 

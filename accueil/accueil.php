@@ -13,11 +13,13 @@
                             <h5> Afinez votre recherche</h4>
                             <div class="form-group">
                                 <label class="labelForm">Age :</label><br >
+                                <div id="ageMin"></div>
+                                <div id="ageMax"></div>
                                 <div>
                                     <div class="middle">
                                         <div class="multi-range-slider">
-                                            <input title="25" type="range" id="input-left" min="18" max="100" value="25">
-                                            <input title="50" type="range" id="input-right" min="18" max="100" value="50">
+                                            <input title="25" type="range" id="input-left" min="18" max="100" value="25" style="-webkit-appearance: none;">
+                                            <input title="50" type="range" id="input-right" min="18" max="100" value="50" style="-webkit-appearance: none;">
                                             <div class="slider">
                                                 <div class="track"></div>
                                                 <div class="range"></div>
@@ -26,12 +28,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div style="align-text: left; display: inline-block; float: left;">
+                                    <div style="align-text: left; display: inline-block; float: left;margin: 2px;">
                                         <div style="font-size: 12px; color: lightslategrey;">
                                             18 
                                         </div>
                                     </div>
-                                    <div style="align-text: right;display: inline-block; float: right;">
+                                    <div style="align-text: right;display: inline-block; float: right;margin: 2px;">
                                         <div style="font-size: 12px; color:lightslategrey;">
                                             100
                                         </div>
@@ -428,6 +430,7 @@ function setLeftValue() {
 	thumbLeft.style.left = percent + "%";
 	range.style.left = percent + "%";
     console.log(_this.value);
+    document.getElementById('ageMin').innerHTML = 'Min :'+_this.value;
 }
 setLeftValue();
 
@@ -443,6 +446,7 @@ function setRightValue() {
 	thumbRight.style.right = (100 - percent) + "%";
 	range.style.right = (100 - percent) + "%";
     console.log(_this.value);
+    document.getElementById('ageMax').innerHTML = 'Max :'+_this.value;
 }
 setRightValue();
 
