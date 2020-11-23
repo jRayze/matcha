@@ -423,7 +423,7 @@ function setLeftValue() {
 
 	_this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
 
-	var percent = ((_this.value - min) / (max - min)) * 100;
+	var percent = ((_this.value - min) / (max - min)) * 99;
 
 	thumbLeft.style.left = percent + "%";
 	range.style.left = percent + "%";
