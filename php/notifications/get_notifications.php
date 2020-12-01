@@ -4,6 +4,7 @@ include "../database/sql.php";
 include "../utils/relative_time.php";
 
 $limit_max = 5;
+$max_message_len = 20;
 
 $data;
 
@@ -21,6 +22,11 @@ $data["matches"] = array();
 $data["matches"]["list"] = array();
 $data["matches"]["total_display"] = 0;
 $data["matches"]["total"] = 0;
+
+$data["chat"] = array();
+$data["chat"]["list"] = array();
+$data["chat"]["total_display"] = 0;
+$data["chat"]["total"] = 0;
 
 if (isset($_SESSION["user_id"])) {
     $bdd = get_connection();
@@ -77,6 +83,32 @@ if (isset($_SESSION["user_id"])) {
         $match["id"] = $query["id"];
         array_push($data["matches"]["list"], $match);
         $data["matches"]["total_display"]++;
+    }
+
+    $stmt_chat_total = $bdd->prepare("SELECT COUNT(*) FROM chat WHERE to_user='$_SESSION[user_id]' AND seen=0;");
+    $stmt_chat_total->execute();
+    if (($query = $stmt_chat_total->fetch())) {
+        $data["chat"]["total"] = $query[0];
+    }
+    $stmt_chat = $bdd->prepare("SELECT users.first_name, users.image1, chat.id, chat.dateadded, chat.from_user, chat.to_user, chat.seen, chat.message FROM chat
+        LEFT JOIN users ON chat.from_user=users.id WHERE chat.to_user='$_SESSION[user_id]' AND chat.seen='0' ORDER BY chat.dateadded DESC LIMIT $limit_max;");
+    $stmt_chat->execute();
+    while (($query = $stmt_chat->fetch())) {
+        $chat;
+        $chat["relative_date"] = get_relative_time($query["dateadded"]);
+        $chat["from"] = $query["first_name"];
+        $chat["img"] = $query["image1"];
+        $chat["id"] = $query["id"];
+        $msg = $query["message"];
+        if (strlen($query["message"]) > $max_message_len) {
+            $msg = str_repeat(".", $max_message_len);
+            for ($i = 0; $i < $max_message_len - 3; $i++) {
+                $msg[$i] = $query["message"][$i];
+            }
+        }
+        $chat["message"] = $msg;
+        array_push($data["chat"]["list"], $chat);
+        $data["chat"]["total_display"]++;
     }
 }
 

@@ -16,6 +16,24 @@
 CREATE DATABASE IF NOT EXISTS `matcha` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `matcha`;
 
+-- Dumping structure for table matcha.chat
+CREATE TABLE IF NOT EXISTS `chat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_user` int(11) NOT NULL DEFAULT '0',
+  `to_user` int(11) NOT NULL DEFAULT '0',
+  `dateadded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `seen` tinyint(4) NOT NULL DEFAULT '0',
+  `message` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- Dumping data for table matcha.chat: 0 rows
+/*!40000 ALTER TABLE `chat` DISABLE KEYS */;
+INSERT INTO `chat` (`id`, `from_user`, `to_user`, `dateadded`, `seen`, `message`) VALUES
+	(1, 0, 6, '2020-12-01 18:44:56', 0, 'Salut'),
+	(3, 0, 6, '2020-12-01 18:53:46', 0, 'On va au cinosh demain?');
+/*!40000 ALTER TABLE `chat` ENABLE KEYS */;
+
 -- Dumping structure for table matcha.family_name_list
 CREATE TABLE IF NOT EXISTS `family_name_list` (
   `name` varchar(50) DEFAULT NULL
@@ -474,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `notif_profile_views` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table matcha.notif_profile_views: 2 rows
+-- Dumping data for table matcha.notif_profile_views: 0 rows
 /*!40000 ALTER TABLE `notif_profile_views` DISABLE KEYS */;
 /*!40000 ALTER TABLE `notif_profile_views` ENABLE KEYS */;
 
