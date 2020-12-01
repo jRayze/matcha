@@ -10,10 +10,10 @@
                     LoveStation
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Accueil</a>
-                        <a class="dropdown-item" href="#">Profil utilisateur</a>
-                        <a class="dropdown-item" href="#">Mon profil</a>
-                        <a class="dropdown-item" href="#">Chat</a>
+                        <a class="dropdown-item" href="../accueil">Accueil</a>
+                        <a class="dropdown-item" href="#">Mes notifs</a>
+                        <a class="dropdown-item" href="../profile">Mon profil</a>
+                        <a class="dropdown-item" href="../chat">Chat</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown dropdown-mega">

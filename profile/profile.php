@@ -35,6 +35,7 @@
                 </div>
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" style='margin-top: 56px;'>
+                <h5>Vos coordonnées</h5>                
                 <form class="">
                     <div class="form-row">
                         <div class="col">
@@ -56,21 +57,24 @@
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
                 <br >
                 <div style="border-bottom:solid 1px grey;"></div>
                 <br >
+                <h5>Votre profil</h5>
+                <br >
+                <label for=validateCustomFile">Vos photos : </label>
                 <form class="was-validated">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 300px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px;">
+                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 300px; margin-bottom: 10px;">
+                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                        <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                        <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
+                        <div class="invalid-feedback">Selectionnez des photos au format .jpeg, .png, .gif.</div>
                     </div>
 
                     <label for="customControlValidation2" for="customControlValidation3" for="customControlValidation1">Orientation Sexuelle</label>
