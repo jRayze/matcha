@@ -84,7 +84,8 @@ if (isset($_SESSION["user_id"])) {
         array_push($data["matches"]["list"], $match);
         $data["matches"]["total_display"]++;
     }
-
+    
+    /*
     $stmt_chat_total = $bdd->prepare("SELECT COUNT(*) FROM chat WHERE to_user='$_SESSION[user_id]' AND seen=0;");
     $stmt_chat_total->execute();
     if (($query = $stmt_chat_total->fetch())) {
@@ -110,6 +111,7 @@ if (isset($_SESSION["user_id"])) {
         array_push($data["chat"]["list"], $chat);
         $data["chat"]["total_display"]++;
     }
+    */
 }
 
 echo json_encode($data);
