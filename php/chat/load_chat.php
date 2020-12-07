@@ -5,6 +5,8 @@ session_start();
 
 $data;
 
+
+
 $data["chat_history"] = array();
 
 $data["focused_chat"] = array();
@@ -33,6 +35,7 @@ if (isset($_SESSION["user_id"])) {
         JOIN users u ON u.id = cm.from_user
         WHERE ccr.user_id = $_SESSION[user_id];
     ";
+    $data["query"] = $q;
     $stmt_chat_history = $bdd->prepare($q);
     $stmt_chat_history->execute();
     while (($query = $stmt_chat_history->fetch())) {
@@ -77,6 +80,8 @@ if (isset($_SESSION["user_id"])) {
             if ($query["from_user"] == $_SESSION["user_id"]) {
                 $message["sent"] = true;
             }
+            $message["id"] = $query["id"];
+            $message["seen"] = $query["seen"];
             $message["relative_time"] = get_relative_time($query["dateadded"]);
             $message["text"] = $query["message"];
             array_push($data["focused_chat"]["messages"], $message);

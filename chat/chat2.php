@@ -75,14 +75,14 @@ function sendMessage() {
     xhr.open('POST', 'http://localhost/php/chat/send_message.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
-        console.log(this.responseText);
+        //console.log(this.responseText);
         var item = {
             text: this.responseText,
             relative_time: "just now"
         };
         
         var history_item = last_chat.chat_history.find(x => x.conv_id == last_chat.focused_chat.conv_id);
-        console.log(history_item);
+        //console.log(history_item);
         history_item.relative_date = "just now";
         history_item.msg = "Moi: " + this.responseText;
         document.getElementById("history_conv_" + last_chat.focused_chat.conv_id).innerHTML = focused_history_item_update_html(history_item);
@@ -165,7 +165,7 @@ function reload_chat() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
-            last_chat = result;
+            //last_chat = result;
             document.getElementById("chat_history").innerHTML = "";
             result.chat_history.forEach(el => {
                 if (el.conv_id == result.focused_chat.conv_id) {
@@ -176,19 +176,31 @@ function reload_chat() {
             })
             document.getElementById("focused_conv_messages").innerHTML = "";
             result.focused_chat.messages.forEach(el => {
-                console.log(el);
+                //console.log(el);
                 if (el.sent) {
                     document.getElementById("focused_conv_messages").innerHTML += sent_message_html(el);
                 } else {
                     document.getElementById("focused_conv_messages").innerHTML += recieved_message_html(el, result.focused_chat.circle_img);
                 }
             });
-            document.getElementById("focused_conv_messages").scrollTop = document.getElementById("focused_conv_messages").scrollHeight;
+            if (last_chat == null) {
+                document.getElementById("focused_conv_messages").scrollTop = document.getElementById("focused_conv_messages").scrollHeight;
+            } else {
+                if (last_chat.focused_chat.conv_id != result.focused_chat.conv_id) {
+                    document.getElementById("focused_conv_messages").scrollTop = document.getElementById("focused_conv_messages").scrollHeight;
+                } else if (last_chat.focused_chat.messages.length != result.focused_chat.messages.length) {
+                    document.getElementById("focused_conv_messages").scrollTop = document.getElementById("focused_conv_messages").scrollHeight;
+                }
+            }
+            last_chat = result;
         }
     };
     xhttp.open("GET", "http://localhost/php/chat/load_chat.php", true);
     xhttp.send();
 }
-
 reload_chat();
+
+setInterval(function(){
+    reload_chat();
+}, 1000);
 </script>
