@@ -103,6 +103,13 @@
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
                 <div class="">
+                    <h5>Intéressé par : </h5>
+                    <p class="font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <br >
+                <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
+                <br >
+                <div class="">
                     <h5>Age : </h5>
                     <p class="font-weight-lighter">21 ans.</p>
                 </div>
