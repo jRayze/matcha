@@ -102,6 +102,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <button class="btn btn-m btn-primary rounded-pill btn-block" id="marge-bot" type="submit">Appliquer les filtres</button>
                         </form>
                     </div>
                 </div>
