@@ -1,3 +1,14 @@
+.bodyAccueil {
+  background-image: url(https://th.bing.com/th/id/OIP.pHTvnUj5nhLq-1Gnfm5_DAHaDa?pid=Api&rs=1);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+
 .bodyLogin {
 
     text-align: center;
@@ -78,13 +89,6 @@
   margin-top: auto !important;
   margin-bottom: auto !important;
   font-style: italic;
-}
-
-.title {
-  display: flex;
-  font-size: 30px;
-  width: 75%;
-  margin-left: 25%;
 }
 
 .navigbar {
@@ -241,6 +245,17 @@ input[type=range]#input-left::-webkit-slider-thumb {
       margin-bottom: 5px;
       border-bottom: 1px solid rgba(0,0,0,.125);
     }
+    
+    .title {
+      width: 100%;
+      margin: auto;
+      text-align: center;
+    }
+
+    #notifyTitle {
+      width: 100%;
+      margin: auto;
+    }
 }
 
 @media(min-width:768px) {
@@ -250,6 +265,17 @@ input[type=range]#input-left::-webkit-slider-thumb {
     }
     #borderNotify {
       border-right: 1px solid rgba(0,0,0,.125);
+    }
+
+    .title {
+      display: flex;
+      font-size: 30px;
+      width: 75%;
+      margin-left: 25%;
+    }
+    #notifyTitle {
+      width: 70%;
+      margin-left: 30%;
     }
 }
 

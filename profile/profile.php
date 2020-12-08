@@ -1,5 +1,6 @@
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
+        <div class="title">Profile de <div class="nameUser"><?=$_SESSION["user"]?></div></div>
         <div class="row">
             <div class="col-md-3 col-sm-12 py-2 d-flex align-items-center justify-content-center fixed-top"  id="left" >
                 <div class="card">
@@ -34,7 +35,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" style='margin-top: 56px;'>
+            <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" style='margin-top: 5px;'>
                 <h5>Vos coordonnées</h5>                
                 <form class="">
                     <div class="form-row">

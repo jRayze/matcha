@@ -34,7 +34,7 @@
                                     </a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-justify" href="#">Voir tout</a>
+                                <a class="dropdown-item text-justify" href="../notify">Voir tout</a>
                         </div>
                     </div>
                 </li>
@@ -56,7 +56,7 @@
                                     </a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-justify" href="#">Voir tout</a>
+                                <a class="dropdown-item text-justify" href="../notify">Voir tout</a>
                         </div>
                     </div>
                 </li>
@@ -77,7 +77,7 @@
                                     </a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-justify" href="#">Voir tout</a>
+                                <a class="dropdown-item text-justify" href="../notify">Voir tout</a>
                         </div>
                     </div>
                 </li>
@@ -98,7 +98,7 @@
                                     </a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-justify" href="#">Voir tout</a>
+                                <a class="dropdown-item text-justify" href="../chat">Voir tout</a>
                         </div>
                     </div>
                 </li>

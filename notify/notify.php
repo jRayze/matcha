@@ -1,7 +1,7 @@
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
+        <div class="title" id="notifyTitle">Vos notifs <div class="nameUser"><?=$_SESSION["user"]?></div></div>
         <div class="row">
-            <h5 style="margin: auto; width: 80%; margin-top: 10px;">Vos notifs</h5>    
             <div class="notify row">
                 <div class="col-md-3 col-xs-12" id="borderNotify">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="margin-bottom: 5px;">

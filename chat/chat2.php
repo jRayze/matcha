@@ -1,11 +1,10 @@
 <div class="container py-5 px-4">
   <!-- For demo purpose-->
   <div class="text-center">
-  <h5 class="display-5 text-black" style="margin-top: 10px;">Discutez avec vos matchs
-    </h5>
+    <div class="title" style="padding-bottom: 3px; padding-top: 10px;">Vos chats <div class="nameUser"><?=$_SESSION["user"]?></div></div>
     </div>
 
-  <div class="row rounded-lg overflow-hidden shadow">
+  <div class="row rounded-lg overflow-hidden shadow" style="margin-top: 5px;">
     <!-- Users box-->
     <div class="col-md-5 px-0 matchs">
       <div class="bg-white">
