@@ -9,11 +9,11 @@
                     <a class="nav-link dropdown-toggle navbar-brand text-danger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     LoveStation
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../accueil">Accueil</a>
-                        <a class="dropdown-item" href="#">Mes notifs</a>
-                        <a class="dropdown-item" href="../profile">Mon profil</a>
-                        <a class="dropdown-item" href="../chat">Chat</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #343a40;">
+                        <a class="dropdown-item" href="../accueil" style="color: red; border-bottom: 1px solid;">Accueil</a>
+                        <a class="dropdown-item" href="../notify" style="color: red; border-bottom: 1px solid;">Mes notifs</a>
+                        <a class="dropdown-item" href="../profile" style="color: red; border-bottom: 1px solid;">Mon profil</a>
+                        <a class="dropdown-item" href="../chat" style="color: red; border-bottom: 1px solid;">Chat</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown dropdown-mega">
