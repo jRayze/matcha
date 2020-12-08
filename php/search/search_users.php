@@ -4,21 +4,54 @@ include "../utils/distances.php";
 
 session_start();
 
+$data;
+
+$data["results"] = array();
+
 if (isset($_SESSION["user_id"])) {
     if (!isset($_SESSION["distances"])) {
         $_SESSION["distances"] = array();
     }
     $bdd = get_connection();
-    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, image1, age, latitude, longitude FROM users;";
+
+    $stmt_user_search_settings = $bdd->prepare("SELECT gender, sexual_orientation, interests, filter_age_min, filter_age_max, filter_distance_km FROM users WHERE id=$_SESSION[user_id];");
+    $stmt_user_search_settings->execute();
+    $user_search_settings = $stmt_user_search_settings->fetch();
+    //print_r($user_search_settings);
+
+    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, popularity, image1, age, latitude, longitude FROM users WHERE age >= $user_search_settings[filter_age_min] AND age <= $user_search_settings[filter_age_max];";
     $stmt_user_list = $bdd->prepare($q);
     $stmt_user_list->execute();
     while (($query = $stmt_user_list->fetch())) {
-        if ($query["latitude"] != null && $query["latitude"] !== 0) {
+        if ($query["latitude"] != null && $query["latitude"] !== 0 && $query["longitude"] != null && $query["longitude"] !== 0) {
             if (!isset($_SESSION["distances"][$query["id"]])) {
                 $_SESSION["distances"][$query["id"]] = get_distance($_SESSION["latitude"], $_SESSION["longitude"], $query["latitude"], $query["longitude"]);
             }
-            echo "<br>".$_SESSION["distances"][$query["id"]];
+            if ($_SESSION["distances"][$query["id"]] <= $user_search_settings["filter_distance_km"]) {
+                $result;
+                $result["distance"] = $_SESSION["distances"][$query["id"]];
+                $result["age"] = $query["age"];
+                $result["id"] = $query["id"];
+                $result["fullname"] = $query["first_name"].' '.$query["last_name"];
+                $result["bio"] = $query["bio"];
+                $result["popularity"] = $query["popularity"];
+
+                $result["sexualOrientation"] = "Hétérosexuel";
+                if ($query["sexual_orientation"] == "bisexual") {
+                    $result["sexualOrientation"] = "Bisexuel";
+                }
+                if ($query["sexual_orientation"] == "homosexual") {
+                    $result["sexualOrientation"] = "Homosexuel";
+                }
+
+                $result["image"] = $query["image1"];
+                array_push($data["results"], $result);
+                if (count($data["results"]) > 8) {
+                    break;
+                }
+            }
         }
     }
 }
+echo json_encode($data);
 ?>

@@ -173,7 +173,7 @@ function reload_chat() {
                 } else {
                     document.getElementById("chat_history").innerHTML += history_item_html(el);
                 }
-            })
+            });
             document.getElementById("focused_conv_messages").innerHTML = "";
             result.focused_chat.messages.forEach(el => {
                 //console.log(el);

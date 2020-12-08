@@ -35,7 +35,7 @@ if (isset($_SESSION["user_id"])) {
         JOIN users u ON u.id = cm.from_user
         WHERE ccr.user_id = $_SESSION[user_id];
     ";
-    $data["query"] = $q;
+    //$data["query"] = $q;
     $stmt_chat_history = $bdd->prepare($q);
     $stmt_chat_history->execute();
     while (($query = $stmt_chat_history->fetch())) {
