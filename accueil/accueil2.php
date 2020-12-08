@@ -1,6 +1,6 @@
 <body class="bodyAccueil">
     <div class="container-fluid" style="margin-top: 56px;">
-        <h1 class="title">Bonjour <?$_NAME?></h1>
+        <div class="title" style="display: flex; font-size: 30px; width: 75%; margin-left: 25%;">Bonjour <div class="nameUser"><?=$_SESSION["user"]?></div></div>
         <div class="row" >
             <div class="col-md-3 col-sm-12 py-2 d-flex align-items-center justify-content-center fixed-top" id="left" >
                 <div class="card mx-auto text-center" >

@@ -69,6 +69,24 @@
     box-shadow: 20px 20px 15px darkslategrey;
 }
 
+.nameUser {
+  margin-left: 10px !important;
+  font-size: 25px !important;
+  vertical-align: middle !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  font-style: italic;
+}
+
+.title {
+  display: flex;
+  font-size: 30px;
+  width: 75%;
+  margin-left: 25%;
+}
+
 .navigbar {
     display: block;
 }
