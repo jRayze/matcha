@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-m btn-primary rounded-pill btn-block" id="marge-bot" type="submit">Appliquer les filtres</button>
+                            <button class="btn btn-m btn-primary rounded-pill btn-block" id="marge-bot" onclick="applyFilters();" type="button">Appliquer les filtres</button>
                         </form>
                     </div>
                 </div>
@@ -123,6 +123,16 @@ var thumbLeft = document.querySelector(".slider > .thumb.left");
 var thumbRight = document.querySelector(".slider > .thumb.right");
 var range = document.querySelector(".slider > .range");
 
+function getLeftValue() {
+    var _this = inputLeft;
+    return (Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1));
+}
+
+function getRightValue() {
+    var _this = inputRight;
+    return (Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1));
+}
+
 function setLeftValue() {
 	var _this = inputLeft,
 		min = parseInt(_this.min),
@@ -134,7 +144,20 @@ function setLeftValue() {
 
 	thumbLeft.style.left = percent + "%";
 	range.style.left = percent + "%";
-    console.log(_this.value);
+    document.getElementById('ageMin').innerHTML = 'Min :'+_this.value;
+}
+
+function updateLeftValue(ageMin) {
+    var _this = inputLeft,
+		min = parseInt(_this.min),
+		max = parseInt(_this.max);
+
+	_this.value = ageMin;
+
+	var percent = ((_this.value - min) / (max - min)) * 99;
+
+	thumbLeft.style.left = percent + "%";
+	range.style.left = percent + "%";
     document.getElementById('ageMin').innerHTML = 'Min :'+_this.value;
 }
 setLeftValue();
@@ -150,7 +173,20 @@ function setRightValue() {
 
 	thumbRight.style.right = (100 - percent) + "%";
 	range.style.right = (100 - percent) + "%";
-    console.log(_this.value);
+    document.getElementById('ageMax').innerHTML = 'Max :'+_this.value;
+}
+
+function updateRightValue(ageMax) {
+    var _this = inputRight,
+		min = parseInt(_this.min),
+		max = parseInt(_this.max);
+
+	_this.value = ageMax;
+
+	var percent = ((_this.value - min) / (max - min)) * 100;
+
+	thumbRight.style.right = (100 - percent) + "%";
+	range.style.right = (100 - percent) + "%";
     document.getElementById('ageMax').innerHTML = 'Max :'+_this.value;
 }
 setRightValue();
@@ -169,7 +205,7 @@ function userCard(user) {
                 html += '<div class="rating" style="margin: auto; padding-bottom: 5px;">';
                     for (var i = 0; i < 5; i++) {
                         if (user.popularity > i) {
-                            html += '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="#e8c209" xmlns="http://www.w3.org/2000/svg">';
+                            html += '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="#dbb718" xmlns="http://www.w3.org/2000/svg">';
                                 html += '<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>';
                             html += '</svg>';
                         } else {
@@ -192,14 +228,60 @@ function userCard(user) {
     return (html);
 }
 
+function applyFilters() {
+    var _sexualOrientation = "heterosexual";
+
+    if (document.getElementById("customRadioInline1").checked) {
+        _sexualOrientation = "bisexual";
+    } else if (document.getElementById("customRadioInline3").checked) {
+        _sexualOrientation = "homosexual";
+    }
+
+    var filter = {
+        ageMin: getLeftValue(),
+        ageMax: getRightValue(),
+        distanceMax: document.getElementById("customRange2").value,
+        sexualOrientation: _sexualOrientation
+    }
+    console.log(filter);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/php/search/apply_filters.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        //console.log(this.responseText);
+        reload_search_list();
+    };
+    xhr.send('filter_age_min=' + filter.ageMin +
+            '&filter_age_max=' + filter.ageMax +
+            '&filter_distance_max=' + filter.distanceMax +
+            '&sexual_orientation=' + filter.sexualOrientation);
+}
+
+function load_filters(filters) {
+    updateLeftValue(filters.filter_age_min);
+    updateRightValue(filters.filter_age_max);
+    document.getElementById("customRange2").value = filters.filter_distance_km;
+
+    if (filters.sexual_orientation_filter == "bisexual") {
+        document.getElementById("customRadioInline1").checked = true;
+    } else if (filters.sexual_orientation_filter == "heterosexual") {
+        document.getElementById("customRadioInline2").checked = true;
+    } else {
+        document.getElementById("customRadioInline3").checked = true;
+    }
+}
+
 function reload_search_list() {
     document.getElementById("userCards").innerHTML = "";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
+            load_filters(result.filters);
+            console.log(result);
             result.results.forEach(el => {
-                console.log(el);
+                //console.log(el);
                 document.getElementById("userCards").innerHTML += userCard(el);
             });
         }

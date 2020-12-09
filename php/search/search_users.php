@@ -14,12 +14,13 @@ if (isset($_SESSION["user_id"])) {
     }
     $bdd = get_connection();
 
-    $stmt_user_search_settings = $bdd->prepare("SELECT gender, sexual_orientation, interests, filter_age_min, filter_age_max, filter_distance_km FROM users WHERE id=$_SESSION[user_id];");
+    $stmt_user_search_settings = $bdd->prepare("SELECT gender, sexual_orientation_filter, interests, filter_age_min, filter_age_max, filter_distance_km FROM users WHERE id=$_SESSION[user_id];");
     $stmt_user_search_settings->execute();
     $user_search_settings = $stmt_user_search_settings->fetch();
+    $data["filters"] = $user_search_settings;
     //print_r($user_search_settings);
 
-    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, popularity, image1, age, latitude, longitude FROM users WHERE age >= $user_search_settings[filter_age_min] AND age <= $user_search_settings[filter_age_max];";
+    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, popularity, image1, age, latitude, longitude FROM users WHERE age >= $user_search_settings[filter_age_min] AND age <= $user_search_settings[filter_age_max] AND sexual_orientation='$user_search_settings[sexual_orientation_filter]';";
     $stmt_user_list = $bdd->prepare($q);
     $stmt_user_list->execute();
     while (($query = $stmt_user_list->fetch())) {
