@@ -51,7 +51,6 @@
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position.coords.latitude, position.coords.longitude);
             mymap.setView([position.coords.latitude, position.coords.longitude], 13);
             L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
         });
