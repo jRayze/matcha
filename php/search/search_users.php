@@ -1,12 +1,19 @@
 <?php
 include "../database/sql.php";
 include "../utils/distances.php";
+include "../utils/interests.php";
 
 session_start();
 
 $data;
 
 $data["results"] = array();
+$data["tags"] = $interest_list;
+$data["user_filter_tags"] = array();
+
+if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
+    $data["user_filter_tags"] = $_SESSION["filter_tags"];
+}
 
 if (isset($_SESSION["user_id"])) {
     if (!isset($_SESSION["distances"])) {
@@ -19,8 +26,22 @@ if (isset($_SESSION["user_id"])) {
     $user_search_settings = $stmt_user_search_settings->fetch();
     $data["filters"] = $user_search_settings;
     //print_r($user_search_settings);
+    //SELECT * FROM users WHERE INSTR(`interests`, 'Sport') > 0
+    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, interests, popularity, image1, age, latitude, longitude FROM users
+        WHERE age >= $user_search_settings[filter_age_min] AND
+        age <= $user_search_settings[filter_age_max] AND
+        sexual_orientation='$user_search_settings[sexual_orientation_filter]';";
 
-    $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, popularity, image1, age, latitude, longitude FROM users WHERE age >= $user_search_settings[filter_age_min] AND age <= $user_search_settings[filter_age_max] AND sexual_orientation='$user_search_settings[sexual_orientation_filter]';";
+    if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
+        $q = substr($q, 0, -1);
+        foreach ($_SESSION["filter_tags"] as $tag) {
+            $q.=" AND INSTR(`interests`, '$tag') > 0 ";
+        }
+        $q.=';';
+    }
+
+    $data["query"] = $q;
+    
     $stmt_user_list = $bdd->prepare($q);
     $stmt_user_list->execute();
     while (($query = $stmt_user_list->fetch())) {
@@ -36,7 +57,7 @@ if (isset($_SESSION["user_id"])) {
                 $result["fullname"] = $query["first_name"].' '.$query["last_name"];
                 $result["bio"] = $query["bio"];
                 $result["popularity"] = $query["popularity"];
-
+                $result["interests"] = explode(",", $query["interests"]);
                 $result["sexualOrientation"] = "Hétérosexuel";
                 if ($query["sexual_orientation"] == "bisexual") {
                     $result["sexualOrientation"] = "Bisexuel";

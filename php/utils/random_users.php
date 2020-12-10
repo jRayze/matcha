@@ -1,5 +1,7 @@
 <?php
 include "../database/sql.php";
+include "../utils/interests.php";
+
 session_start();
 
 $sexual_orientation_list = array("heterosexual", "homosexual", "bisexual");
@@ -23,6 +25,15 @@ if (isset($_GET["count"]) && intval($_GET["count"]) > 0 && intval($_GET["count"]
                 $popularity = rand(0, 5);
                 $sexual_orientation = $sexual_orientation_list[rand(0, 2)];
                 $bio = "This is my bio";
+
+                $nb_interests = rand(0, count($interest_list) - 1);
+                shuffle($interest_list);
+                $interest_array = array();
+                for ($x = 0; $x < $nb_interests; $x++) {
+                    array_push($interest_array, $interest_list[$x]);
+                }
+                $comma_separated = implode(",", $interest_array);
+                
                 //$latitude = $value->{'location'}->{'coordinates'}->{'latitude'};
                 //$longitude = $value->{'location'}->{'coordinates'}->{'longitude'};
                 $email = $value->{'email'};
@@ -30,7 +41,7 @@ if (isset($_GET["count"]) && intval($_GET["count"]) > 0 && intval($_GET["count"]
                 $type = pathinfo($value->{'picture'}->{'large'}, PATHINFO_EXTENSION);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($value->{'picture'}->{'large'}));
     
-                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, profile_image, popularity, sexual_orientation, bio) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$base64', 1, $popularity, '$sexual_orientation', '$bio');";
+                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, profile_image, popularity, sexual_orientation, bio, interests) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$base64', 1, $popularity, '$sexual_orientation', '$bio', '$comma_separated');";
                 echo $q;
                 $stmt = $bdd->prepare($q);
                 $stmt->execute();

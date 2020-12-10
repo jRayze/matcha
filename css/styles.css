@@ -337,3 +337,15 @@ input[type=range]#input-left::-webkit-slider-thumb {
 .wsInitial {
   white-space: initial !important;
 }
+
+/* interest filter */
+
+.badge-item-active {
+    background-color: #007bff!important;
+    cursor: pointer;
+}
+
+.badge-item-inactive {
+    background-color: #909ca9!important;
+    cursor: pointer;
+}

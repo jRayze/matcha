@@ -72,12 +72,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="formControlRange" class="labelForm">Centre d'intérêts :</label>
-                                <div class="tagsHobby">
-                                    <span class="badge badge-pill badge-primary">Sport</span>
-                                    <span class="badge badge-pill badge-primary">Voyage</span>
-                                    <span class="badge badge-pill badge-primary">Cinéma</span>
-                                    <span class="badge badge-pill badge-primary">Jeux video</span>
-                                    <span class="badge badge-pill badge-primary">Litterature</span>
+                                <div class="tagsHobby" id="tagFilters">
+                                    <span class="badge badge-pill badge-primary badge-item-active">Sport</span>
+                                    <span class="badge badge-pill badge-primary badge-item-active">Voyage</span>
+                                    <span class="badge badge-pill badge-primary badge-item-active">Cinéma</span>
+                                    <span class="badge badge-pill badge-primary badge-item-active">Jeux video</span>
+                                    <span class="badge badge-pill badge-primary badge-item-active">Litterature</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,7 +115,10 @@
             </div>
         </div>
     </div>
-    <script >
+    <script>
+
+var filterTags = new Array();
+
 var inputLeft = document.getElementById("input-left");
 var inputRight = document.getElementById("input-right");
 
@@ -215,12 +218,13 @@ function userCard(user) {
                         }
                     }
                 html += '</div>';
-                html += '<p class="card-text" style="font-size: 15px;">' + user.bio + '</p>';
+                //html += '<p class="card-text" style="font-size: 15px;">' + user.bio + '</p>';
             html += '</div>';
             html += '<ul class="list-group list-group-flush">';
                 html += '<li class="list-group-item">';
-                    html += '<span class="badge badge-pill badge-primary">Sport</span>';
-                    html += '<span class="badge badge-pill badge-primary">Voyage</span>';
+                    user.interests.forEach(el => {
+                        html += '<span class="badge badge-pill badge-primary">' + el + '</span>';
+                    });
                 html += '</li>';
             html += '</ul>';
         html += '</div>';
@@ -243,7 +247,14 @@ function applyFilters() {
         distanceMax: document.getElementById("customRange2").value,
         sexualOrientation: _sexualOrientation
     }
-    console.log(filter);
+    //console.log(filter);
+    var activeFilters = new Array();
+    filterTags.forEach(el => {
+        if (el.active) {
+            activeFilters.push(el.name);
+        }
+    });
+    console.log(activeFilters.join(","));
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost/php/search/apply_filters.php', true);
@@ -255,7 +266,21 @@ function applyFilters() {
     xhr.send('filter_age_min=' + filter.ageMin +
             '&filter_age_max=' + filter.ageMax +
             '&filter_distance_max=' + filter.distanceMax +
-            '&sexual_orientation=' + filter.sexualOrientation);
+            '&sexual_orientation=' + filter.sexualOrientation +
+            '&tags=' + activeFilters.join(","));
+}
+
+function reloadFilterTags() {
+    var html = "";
+    filterTags.forEach(el => {
+        if (el.active) {
+            html += '<span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-active">' + el.name + '</span>';
+        } else {
+            html += '<span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-inactive">' + el.name + '</span>';
+        }
+        
+    });
+    document.getElementById("tagFilters").innerHTML = html;
 }
 
 function load_filters(filters) {
@@ -270,6 +295,15 @@ function load_filters(filters) {
     } else {
         document.getElementById("customRadioInline3").checked = true;
     }
+    reloadFilterTags();
+}
+
+function tagClicked(span) {
+    var tag = filterTags.find(x => x.name == span.innerText);
+    if (tag != undefined) {
+        tag.active = !tag.active;
+    }
+    reloadFilterTags();
 }
 
 function reload_search_list() {
@@ -278,8 +312,16 @@ function reload_search_list() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
-            load_filters(result.filters);
             console.log(result);
+            if (filterTags.length == 0) {
+                result.tags.forEach(el => {
+                    filterTags.push({
+                        name: el,
+                        active: result.user_filter_tags.find(x => x == el) != undefined
+                    });
+                });
+            }
+            load_filters(result.filters);
             result.results.forEach(el => {
                 //console.log(el);
                 document.getElementById("userCards").innerHTML += userCard(el);

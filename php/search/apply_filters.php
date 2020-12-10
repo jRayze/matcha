@@ -1,5 +1,7 @@
 <?php
 include "../database/sql.php";
+include "../utils/interests.php";
+
 session_start();
 
 $sexual_orientation_list = array("heterosexual", "homosexual", "bisexual");
@@ -41,10 +43,21 @@ if (isset($_SESSION["user_id"]) &&
     $debug["distance_max"] = $distance_max;
     $debug["sexual_orientation"] = $sexual_orientation;
 
+    $_SESSION["filter_tags"] = array();
+    if (isset($_POST["tags"])) {
+        $filter_tags = explode(",", $_POST["tags"]);
+        foreach ($filter_tags as $tag) {
+            if (in_array($tag, $interest_list)) {
+                array_push($_SESSION["filter_tags"], $tag);
+            }
+        }
+        $debug["filter_tags"] = $filter_tags;
+    }
+
     $bdd = get_connection();
 
     $stmt_update_user_search_settings = $bdd->prepare("UPDATE users SET filter_age_min=$age_min, filter_age_max=$age_max, filter_distance_km=$distance_max, sexual_orientation_filter='$sexual_orientation' WHERE id=$_SESSION[user_id];");
     $stmt_update_user_search_settings->execute();
-    //echo json_encode($debug);
+    echo json_encode($debug);
 }
 ?>
