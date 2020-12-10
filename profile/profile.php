@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="/css/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title">Profile de <div class="nameUser"><?=$_SESSION["user"]?></div></div>
@@ -33,7 +37,31 @@
                             <span class="badge badge-pill badge-primary">Voyage</span>
                         </li>
                     </ul>
+                    <div id="mapid" style="height:180px; width; 180px;"></div>
+                <script>
+       var mymap = L.map('mapid').setView([48.839, 2.321], 13);
+       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'your.mapbox.access.token'
+    }).addTo(mymap);
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position.coords.latitude, position.coords.longitude);
+            mymap.setView([position.coords.latitude, position.coords.longitude], 13);
+            L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
+        });
+    } else {
+    /* la géolocalisation n'est pas disponible */
+    }
+    
+       </script>
                 </div>
+                
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" style='margin-top: 5px;'>
                 <h5>Vos coordonnées</h5>                
