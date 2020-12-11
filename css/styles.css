@@ -256,6 +256,21 @@ input[type=range]#input-left::-webkit-slider-thumb {
       width: 100%;
       margin: auto;
     }
+    #mapid {
+        position: absolute;
+        margin-top: 680px;
+        width: 90%;
+        height: 250px;
+    }
+
+    #main {
+        margin-top: 275px;
+    }
+
+    .carousselMedia {
+        width: 100% !important;
+        margin: auto !important;
+    }
 }
 
 @media(min-width:768px) {
@@ -277,6 +292,23 @@ input[type=range]#input-left::-webkit-slider-thumb {
       width: 70%;
       margin-left: 30%;
     }
+
+    #mapid {
+        position: absolute;
+        margin-top: 700px;
+        width: 90%;
+        height: 250px;
+    }
+    
+    #main {
+        margin-top: 5px;
+    }
+
+    .carousselMedia {
+        width: 500px !important;
+        margin: auto !important;
+    }
+
 }
 
 #left {

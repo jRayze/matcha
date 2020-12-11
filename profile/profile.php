@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="/css/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
+   crossorigin="">
+</script>
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title">Profile de <div class="nameUser"><?=$_SESSION["user"]?></div></div>
@@ -29,7 +30,6 @@
                                 <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                             </svg>
                         </div>
-                        <p class="card-text" style="font-size: 15px;" >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
@@ -37,32 +37,31 @@
                             <span class="badge badge-pill badge-primary">Voyage</span>
                         </li>
                     </ul>
-                    <div id="mapid" style="height:180px; width; 180px;"></div>
-                <script>
-       var mymap = L.map('mapid').setView([48.839, 2.321], 13);
-       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'your.mapbox.access.token'
-    }).addTo(mymap);
-
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            mymap.setView([position.coords.latitude, position.coords.longitude], 13);
-            L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
-        });
-    } else {
-    /* la géolocalisation n'est pas disponible */
-    }
-    
-       </script>
                 </div>
-                
+                <div id="mapid"></div>
+                <script>
+                    var mymap = L.map('mapid').setView([48.839, 2.321], 13);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        maxZoom: 18,
+                        id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        accessToken: 'your.mapbox.access.token'
+                    }).addTo(mymap);
+
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            mymap.setView([position.coords.latitude, position.coords.longitude], 13);
+                            L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
+                        });
+                    } else {
+                    /* la géolocalisation n'est pas disponible */
+                    }
+                    
+                </script>
             </div>
-            <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" style='margin-top: 5px;'>
+            <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" >
                 <h5>Vos coordonnées</h5>                
                 <form class="">
                     <div class="form-row">
