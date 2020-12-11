@@ -54,6 +54,14 @@ if (isset($_SESSION["user_id"]) &&
         $debug["filter_tags"] = $filter_tags;
     }
 
+    $_SESSION["popularity_filter"] = 0;
+    if (isset($_POST["popularity"]) && is_numeric($_POST["popularity"])) {
+        $popularity = intval($_POST["popularity"]);
+        if ($popularity > -1 && $popularity < 6) {
+            $_SESSION["popularity_filter"] = $popularity;
+        }
+    }
+
     $bdd = get_connection();
 
     $stmt_update_user_search_settings = $bdd->prepare("UPDATE users SET filter_age_min=$age_min, filter_age_max=$age_max, filter_distance_km=$distance_max, sexual_orientation_filter='$sexual_orientation' WHERE id=$_SESSION[user_id];");

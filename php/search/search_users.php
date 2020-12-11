@@ -10,9 +10,14 @@ $data;
 $data["results"] = array();
 $data["tags"] = $interest_list;
 $data["user_filter_tags"] = array();
+$data["user_filter_popularity"] = 0;
 
 if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
     $data["user_filter_tags"] = $_SESSION["filter_tags"];
+}
+
+if (isset($_SESSION["popularity_filter"])) {
+    $data["user_filter_popularity"] = $_SESSION["popularity_filter"];
 }
 
 if (isset($_SESSION["user_id"])) {
@@ -30,14 +35,15 @@ if (isset($_SESSION["user_id"])) {
     $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, interests, popularity, image1, age, latitude, longitude FROM users
         WHERE age >= $user_search_settings[filter_age_min] AND
         age <= $user_search_settings[filter_age_max] AND
-        sexual_orientation='$user_search_settings[sexual_orientation_filter]';";
+        sexual_orientation='$user_search_settings[sexual_orientation_filter]'";
 
     if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
-        $q = substr($q, 0, -1);
         foreach ($_SESSION["filter_tags"] as $tag) {
             $q.=" AND INSTR(`interests`, '$tag') > 0 ";
         }
-        $q.=';';
+    }
+    if (isset($_SESSION["popularity_filter"]) && $_SESSION["popularity_filter"] > 0) {
+        $q.=" AND popularity = $_SESSION[popularity_filter] ";
     }
 
     $data["query"] = $q;

@@ -349,3 +349,7 @@ input[type=range]#input-left::-webkit-slider-thumb {
     background-color: #909ca9!important;
     cursor: pointer;
 }
+
+.star-rating {
+    cursor: pointer;
+}

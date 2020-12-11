@@ -18,6 +18,7 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                 $_SESSION["latitude"] = $query["latitude"];
                 $_SESSION["longitude"] = $query["longitude"];
                 $_SESSION["filter_tags"] = array();
+                $_SESSION["popularity_filter"] = 0;
             } else {
                 $_SESSION["login_error"] = "Invalid email / password";
             }
