@@ -236,7 +236,7 @@ function userCard(user) {
     var html = "";
     html += '<div class="col-xl-4 col-md-6 col-sm-12" style="margin: auto; padding-bottom: 15px;">';
         html += '<div class="card">';
-            html += '<img class="card-img-top" src="' + user.image + '" alt="Card image cap">';
+            html += '<a href="/usersProfiles/index.php?user_id=' + user.id + '"><img class="card-img-top" src="' + user.image + '" alt="Card image cap"></a>';
             html += '<div class="card-body">';
                 html += '<div class="nomAge">' + user.fullname + ', ' + user.age + ' ans</div>';
                 html += '<div class="genre">' + user.sexualOrientation + '</div>';
