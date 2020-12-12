@@ -43,7 +43,7 @@ if (isset($_SESSION["user_id"])) {
         }
     }
     if (isset($_SESSION["popularity_filter"]) && $_SESSION["popularity_filter"] > 0) {
-        $q.=" AND popularity = $_SESSION[popularity_filter] ";
+        $q.=" AND popularity >= $_SESSION[popularity_filter] ";
     }
 
     $data["query"] = $q;
