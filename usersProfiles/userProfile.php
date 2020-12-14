@@ -102,6 +102,54 @@ if ($user_infos === null) {
                         </li>
                     </ul>
                 </div>
+                <div class="report">
+                    <button style="width:49%;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
+                    <dialog id="favDialog" style="    border: 1px solid lightgray;
+    margin: auto;
+    font-family: inherit;">
+                        <form method="dialog">
+                            <p><label>Motif du signalement :
+                            <select>
+                                <option></option>
+                                <option>Language offensant</option>
+                                <option>Photo a caractère pornographique</option>
+                                <option>Il boit du coca cola</option>
+                            </select>
+                            </label></p>
+                            <menu>
+                            <button class="btn btn-danger" value="cancel">Annuler</button>
+                            <button class="btn btn-primary" id="confirmBtn" value="default">Confirmer</button>
+                            </menu>
+                        </form>
+                    </dialog>
+                    <button style="width:49%;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
+                </div>
+                <script>
+                        (function() {
+                        var updateButton = document.getElementById('signaler');
+                        var favDialog = document.getElementById('favDialog');
+                        var outputBox = document.getElementsByTagName('output')[0];
+                        var selectEl = document.getElementsByTagName('select')[0];
+                        var confirmBtn = document.getElementById('confirmBtn');
+
+                        // Le bouton "mettre à jour les détails" ouvre la boîte de dialogue
+                        updateButton.addEventListener('click', function onOpen() {
+                            if (typeof favDialog.showModal === "function") {
+                            favDialog.showModal();
+                            } else {
+                            console.error("L'API dialog n'est pas prise en charge par votre navigateur");
+                            }
+                        });
+                        // Le champ "animal préféré" définit la valeur pour le bouton submit
+                        selectEl.addEventListener('change', function onSelect(e) {
+                            confirmBtn.value = selectEl.value;
+                        });
+                        // Le bouton "Confirmer" déclenche l'évènement "close" sur le dialog avec [method="dialog"]
+                        favDialog.addEventListener('close', function onClose() {
+                            outputBox.value = "Vous avez cliqué sur le bouton " + favDialog.returnValue + " !";
+                        });
+                        })();
+                </script>
                 <div id="mapid"></div>
                 <script>
                     var latitude = <?php echo $user_infos["latitude"]; ?>;
