@@ -82,11 +82,11 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-column mb-2 mb-lg-0">
                             <h5 class="dropdown-header">Chat</h5>
-                                <div id="listeMatchs">
+                                <div id="listeChat">
                                     
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-justify" href="../chat">Voir tout</a>
+                                <a class="dropdown-item text-justify" href="/chat">Voir tout</a>
                         </div>
                     </div>
                 </li>
@@ -116,17 +116,6 @@ function nbToSpanCount(nb) {
         ret = "9+";
     }
     return (ret);
-}
-
-function notif_item_classic(data) {
-    var html = "";
-
-    html += '<a class="dropdown-item" href="#">';
-    html +=     '<img class="image-circle" alt="100x100" src="' + data.img + '" data-holder-rendered="true">';
-    html +=     data.from + ' (' + data.relative_date + ')';
-    html += '</a>';
-
-    return (html);
 }
 
 function profileViews(data) {
@@ -168,6 +157,14 @@ function matches(data) {
 
 function chat(data) {
     document.getElementById("spanChatCount").innerText = nbToSpanCount(data.total);
+    var html = "";
+    for (var i = 0; i < data.list.length; i++) {
+        html += '<a class="dropdown-item" href="/php/redirections/chat_conv.php?conv_id=' + data.list[i].conv_id + '">';
+        html +=     '<img class="image-circle" alt="100x100" src="' + data.list[i].img + '" data-holder-rendered="true">';
+        html +=     data.list[i].message + ' (' + data.list[i].relative_date + ')';
+        html += '</a>';
+    }
+    document.getElementById("listeChat").innerHTML = html;
 }
 
 function reloadNotifs() {

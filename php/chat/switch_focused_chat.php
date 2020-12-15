@@ -14,8 +14,6 @@ if (isset($_SESSION["user_id"]) && isset($_POST["conv_id"])) {
     if (($query = $stmt_conv_id->fetch())) {
         $data["reload_chat"] = true;
         $_SESSION["focus_chat_id"] = $conv_id;
-        
-        
     }
 }
 echo json_encode($data);

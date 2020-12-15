@@ -87,34 +87,49 @@ if (isset($_SESSION["user_id"])) {
         array_push($data["matches"]["list"], $match);
         $data["matches"]["total_display"]++;
     }
-    
-    /*
-    $stmt_chat_total = $bdd->prepare("SELECT COUNT(*) FROM chat WHERE to_user='$_SESSION[user_id]' AND seen=0;");
-    $stmt_chat_total->execute();
-    if (($query = $stmt_chat_total->fetch())) {
-        $data["chat"]["total"] = $query[0];
-    }
-    $stmt_chat = $bdd->prepare("SELECT users.first_name, users.image1, chat.id, chat.dateadded, chat.from_user, chat.to_user, chat.seen, chat.message FROM chat
-        LEFT JOIN users ON chat.from_user=users.id WHERE chat.to_user='$_SESSION[user_id]' AND chat.seen='0' ORDER BY chat.dateadded DESC LIMIT $limit_max;");
+
+    $q = "SELECT ccr.conv_id,
+        (
+            SELECT CONCAT(users.first_name, ' ', users.last_name) FROM chat_conversation_relations ccr
+            INNER JOIN users ON users.id = ccr.user_id
+            WHERE ccr.conv_id = cm.conv_id AND ccr.user_id != $_SESSION[user_id]
+        ) as destinataire,
+        (
+            SELECT users.image1 FROM chat_conversation_relations ccr
+            INNER JOIN users ON users.id = ccr.user_id
+            WHERE ccr.conv_id = cm.conv_id AND ccr.user_id != $_SESSION[user_id]
+        ) as destinataire_image,
+        u.id, cm.from_user, cm.dateadded, cm.seen, cm.message FROM chat_conversations cc
+        JOIN chat_messages cm ON cm.id = cc.last_chat_id
+        JOIN chat_conversation_relations ccr ON ccr.conv_id = cm.conv_id
+        JOIN users u ON u.id = cm.from_user
+        WHERE ccr.user_id = $_SESSION[user_id] AND cm.seen = 0;
+    ";
+
+    $stmt_chat = $bdd->prepare($q);
     $stmt_chat->execute();
     while (($query = $stmt_chat->fetch())) {
-        $chat;
-        $chat["relative_date"] = get_relative_time($query["dateadded"]);
-        $chat["from"] = $query["first_name"];
-        $chat["img"] = $query["image1"];
-        $chat["id"] = $query["id"];
-        $msg = $query["message"];
-        if (strlen($query["message"]) > $max_message_len) {
-            $msg = str_repeat(".", $max_message_len);
-            for ($i = 0; $i < $max_message_len - 3; $i++) {
-                $msg[$i] = $query["message"][$i];
+        if ($query["from_user"] != $_SESSION["user_id"]) {
+            $chat;
+            $chat["relative_date"] = get_relative_time($query["dateadded"]);
+            $chat["from"] = $query["destinataire"];
+            $chat["img"] = $query["destinataire_image"];
+            $chat["conv_id"] = $query["conv_id"];
+            $chat["id"] = $query["id"];
+            $msg = $query["message"];
+            if (strlen($query["message"]) > $max_message_len) {
+                $msg = str_repeat(".", $max_message_len);
+                for ($i = 0; $i < $max_message_len - 3; $i++) {
+                    $msg[$i] = $query["message"][$i];
+                }
             }
+            $chat["message"] = $msg;
+            array_push($data["chat"]["list"], $chat);
+            $data["chat"]["total_display"]++;
+
+            $data["chat"]["total"]++;
         }
-        $chat["message"] = $msg;
-        array_push($data["chat"]["list"], $chat);
-        $data["chat"]["total_display"]++;
     }
-    */
 }
 
 echo json_encode($data);
