@@ -348,7 +348,7 @@ function reload_search_list() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
-            console.log(result);
+            //console.log(result);
             if (filterTags.length == 0) {
                 result.tags.forEach(el => {
                     filterTags.push({

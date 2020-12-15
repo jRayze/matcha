@@ -24,6 +24,15 @@ if (isset($_GET["user_id"]) && is_numeric($_GET["user_id"])) {
 
     if (($query = $stmt_user->fetch())) {
         $user_infos = $query;
+
+        if ($_SESSION["user_id"] != $user_id_secure) {
+            $stmt_check_profile_view = $bdd->prepare("SELECT * FROM notif_profile_views WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure;");
+            $stmt_check_profile_view->execute();
+            if (!($query = $stmt_check_profile_view->fetch())) {
+                $stmt_add_profile_view = $bdd->prepare("INSERT INTO notif_profile_views (from_user, to_user, seen) VALUES ($_SESSION[user_id], $user_id_secure, 0);");
+                $stmt_add_profile_view->execute();
+            }
+        }
     }
 }
 if ($user_infos === null) {
@@ -101,12 +110,15 @@ if ($user_infos === null) {
                         ?>
                         </li>
                     </ul>
+                    <div class="row align-items-center justify-content-center">
+                        <button style="width:49%; margin: 2px;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
+                    </div>
+                    <div class="row align-items-center justify-content-center">
+                        <button style="width:49%; margin: 2px;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
+                    </div>
                 </div>
                 <div class="report">
-                    <button style="width:49%;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
-                    <dialog id="favDialog" style="    border: 1px solid lightgray;
-    margin: auto;
-    font-family: inherit;">
+                    <dialog id="favDialog" style="border: 1px solid lightgray; margin: auto; font-family: inherit;">
                         <form method="dialog">
                             <p><label>Motif du signalement :
                             <select>
@@ -122,7 +134,6 @@ if ($user_infos === null) {
                             </menu>
                         </form>
                     </dialog>
-                    <button style="width:49%;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
                 </div>
                 <script>
                         (function() {

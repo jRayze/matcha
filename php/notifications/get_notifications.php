@@ -31,6 +31,9 @@ $data["chat"]["total"] = 0;
 if (isset($_SESSION["user_id"])) {
     $bdd = get_connection();
 
+    $stmt_last_activity = $bdd->prepare("UPDATE users SET last_activity=NOW() WHERE id='$_SESSION[user_id]';");
+    $stmt_last_activity->execute();
+
     $stmt_profile_views_total = $bdd->prepare("SELECT COUNT(*) FROM notif_profile_views WHERE to_user='$_SESSION[user_id]' AND seen=0;");
     $stmt_profile_views_total->execute();
     if (($query = $stmt_profile_views_total->fetch())) {
