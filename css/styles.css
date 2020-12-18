@@ -400,3 +400,13 @@ input[type=range]#input-left::-webkit-slider-thumb {
 .star-rating {
     cursor: pointer;
 }
+
+.poll-icon-container {
+    margin: 10px;
+    height: 60px;
+    width: 60px;
+    position: relative;
+    border-radius: 50%;
+    background-color: pink;
+    cursor: pointer;
+}

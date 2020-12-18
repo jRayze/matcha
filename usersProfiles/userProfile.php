@@ -32,6 +32,20 @@ if (isset($_GET["user_id"]) && is_numeric($_GET["user_id"])) {
                 $stmt_add_profile_view = $bdd->prepare("INSERT INTO notif_profile_views (from_user, to_user, seen) VALUES ($_SESSION[user_id], $user_id_secure, 0);");
                 $stmt_add_profile_view->execute();
             }
+
+            $user_infos["liked"] = false;
+            $stmt_check_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure;");
+            $stmt_check_like->execute();
+            if (($query = $stmt_check_like->fetch())) {
+                $user_infos["liked"] = true;
+            }
+
+            $user_infos["matched"] = false;
+            $stmt_check_match = $bdd->prepare("SELECT * FROM notif_matches WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure;");
+            $stmt_check_match->execute();
+            if (($query = $stmt_check_match->fetch())) {
+                $user_infos["matched"] = true;
+            }
         }
     }
 }
@@ -43,7 +57,9 @@ if ($user_infos === null) {
     $user_infos = $query;
 }
 ?>
-
+<script>
+var userId = <?php echo $user_infos["id"]; ?>;
+</script>
 <link rel="stylesheet" href="/css/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -244,6 +260,14 @@ if ($user_infos === null) {
                 <br >
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
+                <div class="row text-center">
+                    <div class="col">
+                        <button id="likeButton" type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary">Chat</button>
+                    </div>
+                </div>
                 <div class="">
                     <h5>Bio : </h5>
                     <p class="font-weight-lighter"><?php echo $user_infos["bio"]; ?></p>
@@ -296,4 +320,22 @@ if ($user_infos === null) {
             </div>
         </div>
     </div>
+    <script>
+        function likeProfile() {
+            if (userId != undefined) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost/php/interactions/like_user.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    var result = JSON.parse(this.responseText);
+                    console.log(result);
+                    if (result.liked) {
+                        document.getElementById("likeButton").innerText = "Already liked";
+                        document.getElementById("likeButton").disabled = true;
+                    }
+                };
+                xhr.send('user_id=' + userId);
+            }
+        }
+    </script>
 </body>

@@ -1,6 +1,4 @@
 <?php
-include "../database/sql.php";
-session_start();
 if (isset($_SESSION["user_id"])) {
     $bdd = get_connection();
     $stmt = $bdd->prepare("SELECT * FROM users WHERE id='$_SESSION[user_id]' AND admin=1;");
