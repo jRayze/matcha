@@ -30,12 +30,12 @@ if (isset($_SESSION["user_id"])) {
     $stmt_user_search_settings->execute();
     $user_search_settings = $stmt_user_search_settings->fetch();
     $data["filters"] = $user_search_settings;
-    //print_r($user_search_settings);
-    //SELECT * FROM users WHERE INSTR(`interests`, 'Sport') > 0
+    
     $q = "SELECT id, first_name, last_name, gender, sexual_orientation, bio, interests, popularity, image1, age, latitude, longitude FROM users
         WHERE age >= $user_search_settings[filter_age_min] AND
         age <= $user_search_settings[filter_age_max] AND
-        sexual_orientation='$user_search_settings[sexual_orientation_filter]'";
+        sexual_orientation='$user_search_settings[sexual_orientation_filter]' AND
+        id != $_SESSION[user_id]";
 
     if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
         foreach ($_SESSION["filter_tags"] as $tag) {
