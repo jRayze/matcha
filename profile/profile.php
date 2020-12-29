@@ -5,36 +5,51 @@
 </script>
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
-        <div class="title">Profile de <div class="nameUser"><?=$_SESSION["user"]?></div></div>
+        <div class="title">
+            Profile de <div class="nameUser"><?=$_SESSION["user"]?></div>
+            
+        </div>
+        <div class="col missing-infos">
+            <?php
+            if (isset($_SESSION["missing_profile_infos"]) && count($_SESSION["missing_profile_infos"]) > 0) {
+                echo '<div class="row missing-info-title">Informations manquantes:</div>';
+                foreach ($_SESSION["missing_profile_infos"] as &$value) {
+                    echo '<div class="row missing-info-item">• '.$value.'</div>';
+                }
+            }
+            ?>
+        </div>
         <div class="row">
             <div class="col-md-3 col-sm-12 py-2 d-flex align-items-center justify-content-center fixed-top"  id="left" >
                 <div class="card">
                     <img class="card-img-top" src="../img/lachatteatamere.jpg" alt="Card image cap">
                     <div class="card-body">
-                        <div class="nomAge">Ella Delachatte, 21 ans</div>
-                        <div class="genre">Hétérosexuel</div>
+                        <div class="nomAge"><?php echo $_SESSION["db_infos"]["first_name"]." ".$_SESSION["db_infos"]["last_name"].", ".$_SESSION["db_infos"]["age"]." ans";?></div>
+                        <div class="genre"><?php echo $_SESSION["db_infos"]["sexual_orientation"]; ?></div>
                         <div class="rating" style="margin: auto; padding-bottom: 5px;">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
+                            <?php
+                            for ($i = 0; $i < 5; $i++) {
+                                if ($_SESSION["db_infos"]["popularity"] > $i) {
+                                    echo '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="#dbb718" xmlns="http://www.w3.org/2000/svg">';
+                                        echo '<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>';
+                                    echo '</svg>';
+                                } else {
+                                    echo '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">';
+                                        echo '<path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>';
+                                    echo '</svg>';
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <span class="badge badge-pill badge-primary">Sport</span>
-                            <span class="badge badge-pill badge-primary">Voyage</span>
+                            <?php
+                                $interests = explode(",", $_SESSION["db_infos"]["interests"]);
+                                foreach ($interests as &$interest) {
+                                    echo '<span class="badge badge-pill badge-primary">'.$interest.'</span>';
+                                }
+                            ?>
                         </li>
                     </ul>
                 </div>
@@ -67,21 +82,21 @@
                     <div class="form-row">
                         <div class="col">
                             <label for="prenom">Prénom</label>
-                            <input type="text" class="form-control" id="prenom" placeholder="First name">
+                            <input type="text" class="form-control" id="prenom" placeholder="First name" value="<?php echo $_SESSION["db_infos"]["first_name"]; ?>">
                         </div>
                         <div class="col">
                             <label for="nom">Nom</label>
-                            <input type="text" class="form-control" id="nom" placeholder="Last name">
+                            <input type="text" class="form-control" id="nom" placeholder="Last name" value="<?php echo $_SESSION["db_infos"]["last_name"]; ?>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION["db_infos"]["email"]; ?>">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="exampleInputPassword1">Password (remplacer par un bouton changer mdp)</label>
                         <input type="password" class="form-control" id="exampleInputPassword1">
                     </div>
                     <button type="submit" class="btn btn-primary">Valider</button>
@@ -91,13 +106,13 @@
                 <br >
                 <h5>Votre profil</h5>
                 <br >
-                <label for=validateCustomFile">Vos photos : </label>
+                <label for="validateCustomFile">Vos photos : </label>
                 <form class="was-validated">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 300px; margin-bottom: 10px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="../img/lachatteatamere.jpg" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="<?php echo $_SESSION["db_infos"]["image1"]; ?>" alt="..." class="img-thumbnail" style="width: 300px; margin-bottom: 10px;">
+                    <img src="<?php echo $_SESSION["db_infos"]["image2"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="<?php echo $_SESSION["db_infos"]["image3"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="<?php echo $_SESSION["db_infos"]["image4"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                    <img src="<?php echo $_SESSION["db_infos"]["image5"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" id="validatedCustomFile" required>
                         <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
@@ -106,15 +121,15 @@
 
                     <label for="customControlValidation2" for="customControlValidation3" for="customControlValidation1">Orientation Sexuelle</label>
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
+                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "heterosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
                         <label class="custom-control-label" for="customControlValidation2">Hétérosexuel</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
+                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "homosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
                         <label class="custom-control-label" for="customControlValidation3">Homosexuel</label>
                     </div>
                     <div class="custom-control custom-radio mb-3">
-                        <input type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked" required>
+                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "bisexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked" required>
                         <label class="custom-control-label" for="customControlValidation1">Bisexuel</label>
                         <div class="invalid-feedback">Selectionnez votre orientation sexuelle.</div>
                     </div>
@@ -123,28 +138,48 @@
                     <div class="mb-3">
                         <select class="custom-select" required>
                         <option></option> 
-                        <option value="1">Homme</option>
-                        <option value="2">Femme</option>
+                        <option  <?php echo ($_SESSION["db_infos"]["gender"] == "male" ? 'selected="selected"' : ""); ?>  value="1">Homme</option>
+                        <option  <?php echo ($_SESSION["db_infos"]["gender"] == "female" ? 'selected="selected"' : ""); ?>  value="2">Femme</option>
                         </select>
                         <div class="invalid-feedback">Selectionnez votre genre.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="validationTextarea">Bio</label>
-                        <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Required example textarea" required></textarea>
+                        <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Présentez-vous en quelque mots" required><?php echo $_SESSION["db_infos"]["bio"]; ?></textarea>
                         <div class="invalid-feedback">
                         Ecrivez une petite biographie.
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="validationTextarea">Tags</label>
-                        <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Required example textarea" required></textarea>
-                        <div class="invalid-feedback">
-                        Choisissez des tags.
+                    <div class="form-group">
+                        <label for="formControlRange" class="labelForm">Centre d'intérêts :</label>
+                        <div class="tagsHobby" id="tagFilters">
+                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Sport", 0) !== false ? "active" : "inactive"); ?>">Sport</span>
+                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Voyage", 0) !== false ? "active" : "inactive"); ?>">Voyage</span>
+                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Cinema", 0) !== false ? "active" : "inactive"); ?>">Cinéma</span>
+                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Jeux , 0video") ? "active" : "inactive"); ?>">Jeux video</span>
+                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Litterature", 0) !== false ? "active" : "inactive"); ?>">Litterature</span>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+
+function tagClicked(span) {
+    var tag = span.innerText;
+    if (tag != undefined) {
+        console.log(span.classList);
+        var newClass = "badge-item-active";
+        if (span.classList.contains("badge-item-active")) {
+            span.classList.remove("badge-item-active");
+            newClass = "badge-item-inactive";
+        } else {
+            span.classList.remove("badge-item-inactive");
+        }
+        span.classList.add(newClass);
+    }
+}
+    </script>
 </body>

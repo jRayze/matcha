@@ -19,6 +19,36 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                 $_SESSION["longitude"] = $query["longitude"];
                 $_SESSION["filter_tags"] = array();
                 $_SESSION["popularity_filter"] = 0;
+                $_SESSION["db_infos"] = $query;
+
+                $_SESSION["missing_profile_infos"] = array();
+
+                if ($query["age"] == -1) {
+                    array_push($_SESSION["missing_profile_infos"], "Age");
+                }
+                if ($query["gender"] === null) {
+                    array_push($_SESSION["missing_profile_infos"], "Sexe");
+                }
+                if ($query["bio"] === null) {
+                    array_push($_SESSION["missing_profile_infos"], "Bio");
+                }
+                if ($query["interests"] === null) {
+                    array_push($_SESSION["missing_profile_infos"], "Intérêts");
+                }
+                if ($query["sexual_orientation"] === null) {
+                    array_push($_SESSION["missing_profile_infos"], "Orientation Sexuelle");
+                }
+                if ($query["latitude"] === null ||
+                    $query["longitude"] === null) {
+                    array_push($_SESSION["missing_profile_infos"], "Géolocalisation");
+                }
+                if ($query["image1"] === null ||
+                    $query["image2"] === null ||
+                    $query["image3"] === null ||
+                    $query["image4"] === null ||
+                    $query["image5"] === null) {
+                        array_push($_SESSION["missing_profile_infos"], "5 Images");
+                }
             } else {
                 $_SESSION["login_error"] = "Invalid email / password";
             }

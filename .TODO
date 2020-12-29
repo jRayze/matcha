@@ -1,0 +1,10 @@
+Check mail change to untaken mail
+Check profile complete
+Redirect to profile setting page if not complete
+
+Possibility to drag on map to set location
+Possibility to let browser find location
+
+Update SESSIOn[db_infos] when user changes profile infos
+
+Age field on /profile/ page

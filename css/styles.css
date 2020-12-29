@@ -410,3 +410,16 @@ input[type=range]#input-left::-webkit-slider-thumb {
     background-color: pink;
     cursor: pointer;
 }
+
+.missing-infos {
+    margin-left: 25%;
+}
+
+.missing-info-title {
+    font-weight: bold;
+    color: #DC3545;
+}
+
+.missing-info-item {
+    color: #DC3545;
+}

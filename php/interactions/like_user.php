@@ -6,8 +6,8 @@ session_start();
 
 $data;
 $data["liked"] = false;
-
-if (isset($_SESSION["user_id"]) && isset($_POST["user_id"]) && is_numeric($_POST["user_id"])) {
+if (isset($_SESSION["user_id"]) && isset($_POST["user_id"]) && is_numeric($_POST["user_id"]) &&
+    !isset($_SESSION["missing_profile_infos"]) || count($_SESSION["missing_profile_infos"]) === 0) {
     $user_id_secure = intval($_POST["user_id"]);
 
     if ($user_id_secure != $_SESSION["user_id"]) {
