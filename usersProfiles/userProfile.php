@@ -19,7 +19,7 @@ if (isset($_GET["user_id"]) && is_numeric($_GET["user_id"])) {
     $user_id_secure = intval($_GET["user_id"]);
 
     $bdd = get_connection();
-    $stmt_user = $bdd->prepare("SELECT * FROM users WHERE id=$user_id_secure;");
+    $stmt_user = $bdd->prepare("SELECT * FROM users WHERE id=$user_id_secure AND profile_complete=1;");
     $stmt_user->execute();
 
     if (($query = $stmt_user->fetch())) {
@@ -99,6 +99,13 @@ var userId = <?php echo $user_infos["id"]; ?>;
                     <img class="card-img-top" src="<?php echo $user_infos["image1"] ?>" alt="Card image cap">
                     <div class="card-body">
                         <div class="nomAge"><?php echo $user_infos["first_name"]." ".$user_infos["last_name"].", ".$user_infos["age"]." ans"; ?></div>
+                        <div>
+                            <?php
+                            if ($user_infos["id"] != $_SESSION["user_id"] && isset($_SESSION["distances"][$user_infos["id"]])) {
+                                echo $_SESSION["distances"][$user_infos["id"]]." km";
+                            }
+                            ?>
+                        </div>
                         <div class="genre"><?php echo $sexual_orientation_french[$user_infos["sexual_orientation"]]; ?></div>
                         <div class="rating" style="margin: auto; padding-bottom: 5px;">
                             <?php
@@ -126,11 +133,14 @@ var userId = <?php echo $user_infos["id"]; ?>;
                         ?>
                         </li>
                     </ul>
-                    <div class="row align-items-center justify-content-center">
-                        <button style="width:49%; margin: 2px;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
-                    </div>
-                    <div class="row align-items-center justify-content-center">
-                        <button style="width:49%; margin: 2px;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
+                    
+                    <div <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
+                        <div class="row align-items-center justify-content-center">
+                            <button style="width:49%; margin: 2px;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
+                        </div>
+                        <div class="row align-items-center justify-content-center">
+                            <button style="width:49%; margin: 2px;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
+                        </div>
                     </div>
                 </div>
                 <div class="report">
@@ -179,8 +189,10 @@ var userId = <?php echo $user_infos["id"]; ?>;
                 </script>
                 <div id="mapid"></div>
                 <script>
-                    var latitude = <?php echo $user_infos["latitude"]; ?>;
-                    var longitude = <?php echo $user_infos["longitude"]; ?>;
+                    var defaultLatitude = 48.8553944;
+                    var defaultLongitude = 2.3542705;
+                    var latitude = <?php echo ($user_infos["latitude"] == null ? 0 : $user_infos["latitude"]); ?>;
+                    var longitude = <?php echo ($user_infos["longitude"] == null ? 0 : $user_infos["longitude"]); ?>;
                     var mymap = L.map('mapid').setView([latitude, longitude], 13);
                     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -190,16 +202,12 @@ var userId = <?php echo $user_infos["id"]; ?>;
                         zoomOffset: -1,
                         accessToken: 'your.mapbox.access.token'
                     }).addTo(mymap);
-
-                    if ("geolocation" in navigator) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            mymap.setView([latitude, longitude], 13);
-                            L.marker([latitude, longitude]).addTo(mymap);
-                        });
+                    if (latitude == 0 && longitude == 0) {
+                        mymap.setView([defaultLatitude, defaultLongitude], 13);
                     } else {
-                    /* la géolocalisation n'est pas disponible */
+                        mymap.setView([latitude, longitude], 13);
+                        L.marker([latitude, longitude]).addTo(mymap);
                     }
-                    
                 </script>
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main">
@@ -260,7 +268,7 @@ var userId = <?php echo $user_infos["id"]; ?>;
                 <br >
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
-                <div class="row text-center">
+                <div class="row text-center" <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
                     <div class="col">
                         <button id="likeButton" type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
                     </div>

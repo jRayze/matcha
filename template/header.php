@@ -173,7 +173,7 @@ function reloadNotifs() {
         if (this.readyState == 4 && this.status == 200) {
             var result = JSON.parse(this.responseText);
 
-            console.log(result);
+            //console.log(result);
 
             profileViews(result.profile_views);
             likes(result.likes);

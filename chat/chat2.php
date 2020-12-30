@@ -74,18 +74,17 @@ function sendMessage() {
     xhr.open('POST', 'http://localhost/php/chat/send_message.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
-        //console.log(this.responseText);
         var item = {
             text: this.responseText,
             relative_time: "just now"
         };
-        
         var history_item = last_chat.chat_history.find(x => x.conv_id == last_chat.focused_chat.conv_id);
-        //console.log(history_item);
-        history_item.relative_date = "just now";
-        history_item.msg = "Moi: " + this.responseText;
-        document.getElementById("history_conv_" + last_chat.focused_chat.conv_id).innerHTML = focused_history_item_update_html(history_item);
-        document.getElementById("focused_conv_messages").innerHTML += sent_message_html(item);
+        if (history_item != undefined) {
+            history_item.relative_date = "just now";
+            history_item.msg = "Moi: " + this.responseText;
+            document.getElementById("history_conv_" + last_chat.focused_chat.conv_id).innerHTML = focused_history_item_update_html(history_item);
+            document.getElementById("focused_conv_messages").innerHTML += sent_message_html(item);
+        }
     };
     xhr.send('msg=' + msgText);
     document.getElementById("messageInput").value = "";
@@ -103,7 +102,6 @@ function history_item_html(item) {
             html += '</div>';
         html += '</div>';
     html += '</a>';
-    //console.log(item);
     return (html);
 }
 
@@ -116,7 +114,6 @@ function focused_history_item_update_html(item) {
                 html += '<p class="font-italic mb-0 text-small">' + item.msg + '</p>';
             html += '</div>';
         html += '</div>';
-    //console.log(item);
     return (html);
 }
 
@@ -131,7 +128,6 @@ function focused_history_item_html(item) {
             html += '</div>';
         html += '</div>';
     html += '</a>';
-    //console.log(item);
     return (html);
 }
 
@@ -175,7 +171,6 @@ function reload_chat() {
             });
             document.getElementById("focused_conv_messages").innerHTML = "";
             result.focused_chat.messages.forEach(el => {
-                //console.log(el);
                 if (el.sent) {
                     document.getElementById("focused_conv_messages").innerHTML += sent_message_html(el);
                 } else {

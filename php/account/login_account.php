@@ -49,6 +49,13 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                     $query["image5"] === null) {
                         array_push($_SESSION["missing_profile_infos"], "5 Images");
                 }
+                if (count($_SESSION["missing_profile_infos"]) > 0) {
+                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=0 WHERE id=$query[id];");
+                    $stmt->execute();
+                } else {
+                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=1 WHERE id=$query[id];");
+                    $stmt->execute();
+                }
             } else {
                 $_SESSION["login_error"] = "Invalid email / password";
             }

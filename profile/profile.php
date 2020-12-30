@@ -7,7 +7,6 @@
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title">
             Profile de <div class="nameUser"><?=$_SESSION["user"]?></div>
-            
         </div>
         <div class="col missing-infos">
             <?php
@@ -22,7 +21,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-12 py-2 d-flex align-items-center justify-content-center fixed-top"  id="left" >
                 <div class="card">
-                    <img class="card-img-top" src="../img/lachatteatamere.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="<?php echo $_SESSION["db_infos"]["image1"];?>" alt="Card image cap">
                     <div class="card-body">
                         <div class="nomAge"><?php echo $_SESSION["db_infos"]["first_name"]." ".$_SESSION["db_infos"]["last_name"].", ".$_SESSION["db_infos"]["age"]." ans";?></div>
                         <div class="genre"><?php echo $_SESSION["db_infos"]["sexual_orientation"]; ?></div>
@@ -77,6 +76,24 @@
                 </script>
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" >
+                <h5>Sécurité</h5>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Adresse email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value="<?php echo $_SESSION["db_infos"]["email"]; ?>">
+                    <a href="#">
+                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Changer adresse email</button>
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Mot de passe</label>
+                    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value="**********">
+                    <a href="#">
+                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Changer mot de passe</button>
+                    </a>
+                </div>
+                <br >
+                <div style="border-bottom:solid 1px grey;"></div>
+                <br >
                 <h5>Vos coordonnées</h5>                
                 <form class="">
                     <div class="form-row">
@@ -89,17 +106,7 @@
                             <input type="text" class="form-control" id="nom" placeholder="Last name" value="<?php echo $_SESSION["db_infos"]["last_name"]; ?>">
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION["db_infos"]["email"]; ?>">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password (remplacer par un bouton changer mdp)</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button style="margin-top:5px;" type="submit" class="btn btn-primary">Valider</button>
                 </form>
                 <br >
                 <div style="border-bottom:solid 1px grey;"></div>
@@ -134,6 +141,24 @@
                         <div class="invalid-feedback">Selectionnez votre orientation sexuelle.</div>
                     </div>
 
+                    <label for="custom-select">Age</label>
+                    <div class="mb-3">
+                        <select class="custom-select" required>
+                        <option></option> 
+                        <?php
+                        for ($x = 18; $x <= 100; $x++) {
+                            $selected = "";
+                            if ($_SESSION["db_infos"]["age"] == $x) {
+                                $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="'.$x.'">'.$x.'</option>';
+                          }
+                        ?>
+
+                        </select>
+                        <div class="invalid-feedback">Selectionnez votre genre.</div>
+                    </div>
+
                     <label for="custom-select">Genre</label>
                     <div class="mb-3">
                         <select class="custom-select" required>
@@ -147,9 +172,6 @@
                     <div class="mb-3">
                         <label for="validationTextarea">Bio</label>
                         <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Présentez-vous en quelque mots" required><?php echo $_SESSION["db_infos"]["bio"]; ?></textarea>
-                        <div class="invalid-feedback">
-                        Ecrivez une petite biographie.
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="formControlRange" class="labelForm">Centre d'intérêts :</label>

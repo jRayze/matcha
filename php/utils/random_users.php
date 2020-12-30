@@ -34,14 +34,12 @@ if (isset($_GET["count"]) && intval($_GET["count"]) > 0 && intval($_GET["count"]
                 }
                 $comma_separated = implode(",", $interest_array);
                 
-                //$latitude = $value->{'location'}->{'coordinates'}->{'latitude'};
-                //$longitude = $value->{'location'}->{'coordinates'}->{'longitude'};
                 $email = $value->{'email'};
     
                 $type = pathinfo($value->{'picture'}->{'large'}, PATHINFO_EXTENSION);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($value->{'picture'}->{'large'}));
     
-                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, profile_image, popularity, sexual_orientation, bio, interests) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$base64', 1, $popularity, '$sexual_orientation', '$bio', '$comma_separated');";
+                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, image2, image3, image4, image5, popularity, sexual_orientation, bio, interests, profile_complete) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$base64', '$base64', '$base64', '$base64', '$base64', 0, '$sexual_orientation', '$bio', '$comma_separated', 1);";
                 echo $q;
                 $stmt = $bdd->prepare($q);
                 $stmt->execute();

@@ -239,6 +239,7 @@ function userCard(user) {
             html += '<a href="/usersProfiles/index.php?user_id=' + user.id + '"><img class="card-img-top" src="' + user.image + '" alt="Card image cap"></a>';
             html += '<div class="card-body">';
                 html += '<div class="nomAge">' + user.fullname + ', ' + user.age + ' ans</div>';
+                html += '<div>' + user.distance + ' km</div>';
                 html += '<div class="genre">' + user.sexualOrientation + '</div>';
                 html += '<div class="rating" style="margin: auto; padding-bottom: 5px;">';
                     for (var i = 0; i < 5; i++) {
@@ -289,7 +290,6 @@ function applyFilters() {
             activeFilters.push(el.name);
         }
     });
-    console.log(activeFilters.join(","));
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost/php/search/apply_filters.php', true);
