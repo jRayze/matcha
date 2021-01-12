@@ -60,9 +60,9 @@ if (isset($_SESSION["notify_focus"])) {
             <div class="notify row">
                 <div class="col-md-3 col-xs-12" id="borderNotify">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="margin-bottom: 5px;">
-                    <a class="nav-link <?php echo ($focus == 'profile_views' ? "active" : ""); ?>" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="<?php echo ($focus == 'profile_views' ? "true" : "false"); ?>">Vues</a>
-                    <a class="nav-link <?php echo ($focus == 'likes' ? "active" : ""); ?>" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="<?php echo ($focus == 'likes' ? "true" : "false"); ?>">Likes</a>
-                    <a class="nav-link <?php echo ($focus == 'matches' ? "active" : ""); ?>" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="<?php echo ($focus == 'matches' ? "true" : "false"); ?>">Matchs</a>
+                    <a onclick="viewsClick();" class="nav-link <?php echo ($focus == 'profile_views' ? "active" : ""); ?>" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="<?php echo ($focus == 'profile_views' ? "true" : "false"); ?>">Vues</a>
+                    <a onclick="likesClick();" class="nav-link <?php echo ($focus == 'likes' ? "active" : ""); ?>" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="<?php echo ($focus == 'likes' ? "true" : "false"); ?>">Likes</a>
+                    <a onclick="matchesClick();" class="nav-link <?php echo ($focus == 'matches' ? "active" : ""); ?>" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="<?php echo ($focus == 'matches' ? "true" : "false"); ?>">Matchs</a>
                    <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Chats</a>-->
                     </div>
                 </div>
@@ -74,7 +74,7 @@ if (isset($_SESSION["notify_focus"])) {
                                 echo '<div id="vue1" style="border-bottom: 1px solid lightgrey;">
                                         <a class="dropdown-item wsInitial" href="/usersProfiles/index.php?user_id='.$value["from_id"].'">
                                             <img class="image-circle" alt="100x100" src="'.$value["img"].'" data-holder-rendered="true">
-                                            <div class="nameNotif text-break">'.$value["from"].' à visité votre profile</div>
+                                            <div class="nameNotif text-break">'.$value["from"].' a visité votre profile</div>
                                             <div class="showTimeFrom">'.$value["relative_date"].'</div>
                                         </a>
                                     </div>';
@@ -87,7 +87,7 @@ if (isset($_SESSION["notify_focus"])) {
                                 echo '<div id="vue1" style="border-bottom: 1px solid lightgrey;">
                                         <a class="dropdown-item wsInitial" href="/usersProfiles/index.php?user_id='.$value["from_id"].'">
                                             <img class="image-circle" alt="100x100" src="'.$value["img"].'" data-holder-rendered="true">
-                                            <div class="nameNotif text-break">'.$value["from"].' à liké votre profile</div>
+                                            <div class="nameNotif text-break">'.$value["from"].' a liké votre profile</div>
                                             <div class="showTimeFrom">'.$value["relative_date"].'</div>
                                         </a>
                                     </div>';
@@ -112,4 +112,26 @@ if (isset($_SESSION["notify_focus"])) {
             </div>
         </div>
     </div>
+    <script>
+        function viewsClick() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost/php/notifications/views_seen.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send();
+        }
+
+        function likesClick() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost/php/notifications/likes_seen.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send();
+        }
+
+        function matchesClick() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost/php/notifications/matches_seen.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send();
+        }
+    </script>
 </body>

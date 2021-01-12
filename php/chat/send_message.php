@@ -4,7 +4,7 @@ session_start();
 
 if (isset($_SESSION["user_id"])) {
     if (isset($_SESSION["focus_chat_id"]) && isset($_POST["msg"]) && strlen($_POST["msg"]) > 0) {
-        $msg_secure = htmlspecialchars($_POST["msg"]);
+        $msg_secure = addslashes(htmlspecialchars($_POST["msg"]));
         echo $msg_secure;
         $bdd = get_connection();
         $stmt_send_msg = $bdd->prepare("INSERT INTO chat_messages (from_user, message, conv_id) VALUES ($_SESSION[user_id], '$msg_secure', $_SESSION[focus_chat_id]);");
@@ -18,14 +18,4 @@ if (isset($_SESSION["user_id"])) {
         }
     }
 }
-/*
-
-
-
-Match   => créer nouveau chat_conversation ID=>Z
-        => créer 2 chat_conversation_relations conv_id=Z
-
-Message envoyé => MAJ last_chat_id pour conv_id | OK
-
-*/
 ?>

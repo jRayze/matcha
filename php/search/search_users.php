@@ -7,6 +7,12 @@ session_start();
 
 $data;
 
+if (!isset($_SESSION["max_results"])) {
+    $_SESSION["max_results"] = 9;
+}
+
+$data["max_results"] = $_SESSION["max_results"];
+$data["result_count"] = 0;
 $data["results"] = array();
 $data["tags"] = $interest_list;
 $data["user_filter_tags"] = array();
@@ -74,10 +80,11 @@ if (isset($_SESSION["user_id"])) {
                 }
 
                 $result["image"] = $query["image1"];
-                array_push($data["results"], $result);
-                if (count($data["results"]) > 8) {
-                    break;
+
+                if (count($data["results"]) < $_SESSION["max_results"]) {
+                    array_push($data["results"], $result);
                 }
+                $data["result_count"]++;
             }
         }
     }

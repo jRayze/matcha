@@ -19,11 +19,20 @@ function create_conversation($user_id_1, $user_id_2) {
         $stmt->execute();
         if (($query = $stmt->fetch())) {
             if ($query[0] == 2) {
-                $stmt = $bdd->prepare("SELECT * FROM chat_conversation_relations WHERE user_id='$user_id_2';");
+                $has_conversation = false;
+                $stmt = $bdd->prepare("SELECT * FROM chat_conversation_relations WHERE user_id='$user_id_2' OR user_id='$user_id_1';");
                 $stmt->execute();
-                if (($query = $stmt->fetch())) {
-    
-                } else {
+                
+                $conv_ids = array();
+
+                while (($query = $stmt->fetch())) {
+                    if (in_array($query["conv_id"], $conv_ids)) {
+                        $has_conversation = true;
+                        break;
+                    }
+                    array_push($conv_ids, $query["conv_id"]);
+                }
+                if (!$has_conversation) {
                     $tmp_last_chat_id = $user_id_2 * -1;
                     $stmt_create_conversation = $bdd->prepare("INSERT INTO chat_conversations (last_chat_id) VALUES ($tmp_last_chat_id);");
                     $stmt_create_conversation->execute();

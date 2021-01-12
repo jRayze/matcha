@@ -21,6 +21,14 @@ if (isset($_SESSION["user_id"]) &&
 
     $debug = array();
 
+    if (isset($_POST["expand_list"])) {
+        if ($_POST["expand_list"] == "true") {
+            $_SESSION["max_results"] += 9;
+        } else if ($_POST["expand_list"] == "false") {
+            $_SESSION["max_results"] = 9;
+        }
+    }
+
     $age_min = intval($_POST["filter_age_min"]);
     if ($age_min < $filter_age_min_limit || $age_min >= $filter_age_max_limit) {
         $age_min = $filter_age_min_limit;

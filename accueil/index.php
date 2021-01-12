@@ -7,6 +7,6 @@ if (!isset($_SESSION["user_id"])) {
 }
     include ('../template/start.php');
     include ('../template/header.php');
-    include ('accueil2.php');
+    include ('accueil.php');
     include ('../template/end.php');
 ?>

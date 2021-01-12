@@ -89,7 +89,7 @@ var userId = <?php echo $user_infos["id"]; ?>;
             else {
                 echo '<div class="disconnected" style="font-size: 12px; color: #28a745; margin-top: auto; margin-bottom: auto; margin-left: 10px; color: lightgrey;"><svg style="color: black;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-              </svg>Last connected '.get_relative_time($user_infos["last_activity"]).'</div>';
+              </svg> Last connected '.get_relative_time($user_infos["last_activity"]).'</div>';
             }
             ?>
         </div>
