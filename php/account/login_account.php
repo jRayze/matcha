@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../database/sql.php";
+include "./check_missing_infos.php";
 
 if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"]) && strlen($_POST["password"])) {
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
@@ -21,39 +22,11 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                 $_SESSION["popularity_filter"] = 0;
                 $_SESSION["db_infos"] = $query;
 
-                $_SESSION["missing_profile_infos"] = array();
-
-                if ($query["age"] == -1) {
-                    array_push($_SESSION["missing_profile_infos"], "Age");
-                }
-                if ($query["gender"] === null) {
-                    array_push($_SESSION["missing_profile_infos"], "Sexe");
-                }
-                if ($query["bio"] === null) {
-                    array_push($_SESSION["missing_profile_infos"], "Bio");
-                }
-                if ($query["interests"] === null) {
-                    array_push($_SESSION["missing_profile_infos"], "Intérêts");
-                }
-                if ($query["sexual_orientation"] === null) {
-                    array_push($_SESSION["missing_profile_infos"], "Orientation Sexuelle");
-                }
-                if ($query["latitude"] === null ||
-                    $query["longitude"] === null) {
-                    array_push($_SESSION["missing_profile_infos"], "Géolocalisation");
-                }
-                if ($query["image1"] === null ||
-                    $query["image2"] === null ||
-                    $query["image3"] === null ||
-                    $query["image4"] === null ||
-                    $query["image5"] === null) {
-                        array_push($_SESSION["missing_profile_infos"], "5 Images");
-                }
-                if (count($_SESSION["missing_profile_infos"]) > 0) {
-                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=0 WHERE id=$query[id];");
+                if (profile_is_complete($query)) {
+                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=1 WHERE id=$query[id];");
                     $stmt->execute();
                 } else {
-                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=1 WHERE id=$query[id];");
+                    $stmt = $bdd->prepare("UPDATE users SET profile_complete=0 WHERE id=$query[id];");
                     $stmt->execute();
                 }
             } else {

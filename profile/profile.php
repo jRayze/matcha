@@ -115,17 +115,31 @@
                 <h5>Votre profil</h5>
                 <br >
                 <label for="validateCustomFile">Vos photos : </label>
-                <form class="was-validated">
-                    <img src="<?php echo $_SESSION["db_infos"]["image1"]; ?>" alt="..." class="img-thumbnail" style="width: 300px; margin-bottom: 10px;">
-                    <img src="<?php echo $_SESSION["db_infos"]["image2"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="<?php echo $_SESSION["db_infos"]["image3"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="<?php echo $_SESSION["db_infos"]["image4"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <img src="<?php echo $_SESSION["db_infos"]["image5"]; ?>" alt="..." class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
-                    <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                        <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
-                        <div class="invalid-feedback">Selectionnez des photos au format .jpeg, .png, .gif.</div>
+                <div class="col">
+                    <div class="col">
+                        <img src="<?php echo $_SESSION["db_infos"]["image1"]; ?>" id="img1" alt="Image 1" class="img-thumbnail img-thumbnail-selected" style="width: 300px; margin-bottom: 10px;">
+                        <img src="<?php echo $_SESSION["db_infos"]["image2"]; ?>" id="img2" alt="Image 2" class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                        <img src="<?php echo $_SESSION["db_infos"]["image3"]; ?>" id="img3" alt="Image 3" class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                        <img src="<?php echo $_SESSION["db_infos"]["image4"]; ?>" id="img4" alt="Image 4" class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
+                        <img src="<?php echo $_SESSION["db_infos"]["image5"]; ?>" id="img5" alt="Image 5" class="img-thumbnail" style="width: 200px; margin-bottom: 10px;">
                     </div>
+                    <form action="/php/account/upload_picture.php" method="POST" enctype="multipart/form-data">
+                        <div class="col">
+                            <select name='imageSelect' onchange="imgSelectChanged(this);" class="form-select" aria-label="Default select example">
+                                <option selected value="1">Image1</option>
+                                <option value="2">Image2</option>
+                                <option value="3">Image3</option>
+                                <option value="4">Image4</option>
+                                <option value="5">Image5</option>
+                            </select>
+                        </div>
+                        <div class="custom-file mb-3">
+                            <input name="image" type="file" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
+                            <div class="invalid-feedback">Selectionnez des photos au format .jpeg, .png, .gif.</div>
+                        </div>
+                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Valider</button>
+                    </form>
 
                     <label for="customControlValidation2" for="customControlValidation3" for="customControlValidation1">Orientation Sexuelle</label>
                     <div class="custom-control custom-radio">
@@ -184,11 +198,19 @@
                             <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Litterature", 0) !== false ? "active" : "inactive"); ?>">Litterature</span>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
     <script>
+
+function imgSelectChanged(select) {
+    var imgId = parseInt(select.value);
+    for (var i = 1; i < 6; i++) {
+        document.getElementById("img" + i).classList.remove("img-thumbnail-selected");
+    }
+    document.getElementById("img" + imgId).classList.add("img-thumbnail-selected");
+}
 
 function tagClicked(span) {
     var tag = span.innerText;

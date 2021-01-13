@@ -425,12 +425,26 @@ input[type=range]#input-left::-webkit-slider-thumb {
 }
 
 .img-thumbnail-selected {
-    padding: $thumbnail-padding;
-    background-color: $thumbnail-bg;
-    border: $thumbnail-border-width solid $thumbnail-border-color;
-    @include border-radius($thumbnail-border-radius);
-    @include box-shadow($thumbnail-box-shadow);
-
-    // Keep them at most 100% wide
-    @include img-fluid();
+    border: 2px solid #76d67a!important;
+}
+.form-select {
+    display: block;
+    width: 100%;
+    padding: .375rem 1.75rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    background-color: #fff;
+    background-image: url(/img/downarrow.svg);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
