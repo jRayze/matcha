@@ -271,6 +271,8 @@ input[type=range]#input-left::-webkit-slider-thumb {
         height: 250px;
     }
 
+    
+
     #main {
         margin-top: 340px;
     }
@@ -447,4 +449,10 @@ input[type=range]#input-left::-webkit-slider-thumb {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+#mapProfile {
+    position: absolute;
+    width: 90%;
+    height: 400px;
 }

@@ -2,10 +2,10 @@ Check mail change to untaken mail
 Check profile complete                                                  ✓
 Redirect to profile setting page if not complete                        ✓
 
-Possibility to drag on map to set location
-Possibility to let browser find location
+Possibility to drag on map to set location                              ✓
+Possibility to let browser find location                                ✓ (search_users broken)
 
-Update SESSIOn[db_infos] when user changes profile infos
+Update SESSIOn[db_infos] when user changes profile infos                ✓
 
 Age field on /profile/ page                                             ✓
 
@@ -17,6 +17,6 @@ generate likes & match & chat with generated users                      ✓
 
 notification like => don't like
 
-select image to replace with uploaded image (1st selected by default)   
+select image to replace with uploaded image (1st selected by default)   ✓
 
 like => remove like feature with notification update in db

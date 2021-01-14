@@ -57,10 +57,11 @@ if (isset($_SESSION["user_id"])) {
     
     $stmt_user_list = $bdd->prepare($q);
     $stmt_user_list->execute();
+    
     while (($query = $stmt_user_list->fetch())) {
         if ($query["latitude"] != null && $query["latitude"] !== 0 && $query["longitude"] != null && $query["longitude"] !== 0) {
             if (!isset($_SESSION["distances"][$query["id"]])) {
-                $_SESSION["distances"][$query["id"]] = get_distance($_SESSION["latitude"], $_SESSION["longitude"], $query["latitude"], $query["longitude"]);
+                $_SESSION["distances"][$query["id"]] = get_distance($_SESSION["db_infos"]["latitude"], $_SESSION["db_infos"]["longitude"], $query["latitude"], $query["longitude"]);
             }
             if ($_SESSION["distances"][$query["id"]] <= $user_search_settings["filter_distance_km"]) {
                 $result;

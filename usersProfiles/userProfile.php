@@ -206,7 +206,6 @@ var userId = <?php echo $user_infos["id"]; ?>;
                         mymap.setView([defaultLatitude, defaultLongitude], 13);
                     } else {
                         mymap.setView([latitude, longitude], 13);
-                        L.marker([latitude, longitude]).addTo(mymap);
                     }
                 </script>
             </div>

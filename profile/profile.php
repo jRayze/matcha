@@ -3,7 +3,7 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin="">
 </script>
-<body class="bodyProfile">
+<body class="bodyProfile" onload="bodyOnload();">
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title">
             Profile de <div class="nameUser"><?=$_SESSION["user"]?></div>
@@ -52,29 +52,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="mapid"></div>
-                <script>
-                    var defaultLatitude = 48.8553944;
-                    var defaultLongitude = 2.3542705;
-                    var latitude = <?php echo ($_SESSION["db_infos"]["latitude"] == null ? 0 : $_SESSION["db_infos"]["latitude"]); ?>;
-                    var longitude = <?php echo ($_SESSION["db_infos"]["longitude"] == null ? 0 : $_SESSION["db_infos"]["longitude"]); ?>;
-                    var mymap = L.map('mapid').setView([latitude, longitude], 13);
-                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                        maxZoom: 18,
-                        id: 'mapbox/streets-v11',
-                        tileSize: 512,
-                        zoomOffset: -1,
-                        accessToken: 'your.mapbox.access.token'
-                    }).addTo(mymap);
-                    if (latitude == 0 && longitude == 0) {
-                        mymap.setView([defaultLatitude, defaultLongitude], 13);
-                    } else {
-                        mymap.setView([latitude, longitude], 13);
-                        L.marker([latitude, longitude]).addTo(mymap);
-                    }
-                    
-                </script>
+                
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main" >
                 <h5>Sécurité</h5>
@@ -95,26 +73,8 @@
                 <br >
                 <div style="border-bottom:solid 1px grey;"></div>
                 <br >
-                <h5>Vos coordonnées</h5>                
-                <form class="">
-                    <div class="form-row">
-                        <div class="col">
-                            <label for="prenom">Prénom</label>
-                            <input type="text" class="form-control" id="prenom" placeholder="First name" value="<?php echo $_SESSION["db_infos"]["first_name"]; ?>">
-                        </div>
-                        <div class="col">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" id="nom" placeholder="Last name" value="<?php echo $_SESSION["db_infos"]["last_name"]; ?>">
-                        </div>
-                    </div>
-                    <button style="margin-top:5px;" type="submit" class="btn btn-primary">Valider</button>
-                </form>
+                <h5>Vos photos</h5>
                 <br >
-                <div style="border-bottom:solid 1px grey;"></div>
-                <br >
-                <h5>Votre profil</h5>
-                <br >
-                <label for="validateCustomFile">Vos photos : </label>
                 <div class="col">
                     <div class="col">
                         <img src="<?php echo $_SESSION["db_infos"]["image1"]; ?>" id="img1" alt="Image 1" class="img-thumbnail img-thumbnail-selected" style="width: 300px; margin-bottom: 10px;">
@@ -138,71 +98,167 @@
                             <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
                             <div class="invalid-feedback">Selectionnez des photos au format .jpeg, .png, .gif.</div>
                         </div>
-                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Valider</button>
+                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Upload Image</button>
                     </form>
-
-                    <label for="customControlValidation2" for="customControlValidation3" for="customControlValidation1">Orientation Sexuelle</label>
-                    <div class="custom-control custom-radio">
-                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "heterosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation2">Hétérosexuel</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "homosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation3">Homosexuel</label>
-                    </div>
-                    <div class="custom-control custom-radio mb-3">
-                        <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "bisexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation1">Bisexuel</label>
-                        <div class="invalid-feedback">Selectionnez votre orientation sexuelle.</div>
-                    </div>
-
-                    <label for="custom-select">Age</label>
-                    <div class="mb-3">
-                        <select class="custom-select" required>
-                        <option></option> 
-                        <?php
-                        for ($x = 18; $x <= 100; $x++) {
-                            $selected = "";
-                            if ($_SESSION["db_infos"]["age"] == $x) {
-                                $selected = 'selected="selected"';
-                            }
-                            echo '<option '.$selected.' value="'.$x.'">'.$x.'</option>';
-                          }
-                        ?>
-
-                        </select>
-                        <div class="invalid-feedback">Selectionnez votre genre.</div>
-                    </div>
-
-                    <label for="custom-select">Genre</label>
-                    <div class="mb-3">
-                        <select class="custom-select" required>
-                        <option></option> 
-                        <option  <?php echo ($_SESSION["db_infos"]["gender"] == "male" ? 'selected="selected"' : ""); ?>  value="1">Homme</option>
-                        <option  <?php echo ($_SESSION["db_infos"]["gender"] == "female" ? 'selected="selected"' : ""); ?>  value="2">Femme</option>
-                        </select>
-                        <div class="invalid-feedback">Selectionnez votre genre.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="validationTextarea">Bio</label>
-                        <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Présentez-vous en quelque mots" required><?php echo $_SESSION["db_infos"]["bio"]; ?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange" class="labelForm">Centre d'intérêts :</label>
-                        <div class="tagsHobby" id="tagFilters">
-                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Sport", 0) !== false ? "active" : "inactive"); ?>">Sport</span>
-                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Voyage", 0) !== false ? "active" : "inactive"); ?>">Voyage</span>
-                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Cinema", 0) !== false ? "active" : "inactive"); ?>">Cinéma</span>
-                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Jeux , 0video") ? "active" : "inactive"); ?>">Jeux video</span>
-                            <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Litterature", 0) !== false ? "active" : "inactive"); ?>">Litterature</span>
+                    <br>
+                    <div style="border-bottom:solid 1px grey;"></div>
+                    <br>
+                    <h5>Votre profil</h5>
+                    <br>
+                    <form action="/php/account/update_profile.php" method="POST">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" class="form-control" id="prenom" name="first_name" placeholder="First name" value="<?php echo $_SESSION["db_infos"]["first_name"]; ?>">
+                            </div>
+                            <div class="col">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control" id="nom" name="last_name" placeholder="Last name" value="<?php echo $_SESSION["db_infos"]["last_name"]; ?>">
+                            </div>
                         </div>
-                    </div>
+                        <label for="customControlValidation2" for="customControlValidation3" for="customControlValidation1">Orientation Sexuelle</label>
+                        <div class="custom-control custom-radio">
+                            <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "heterosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" value="heterosexual" required>
+                            <label class="custom-control-label" for="customControlValidation2">Hétérosexuel</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "homosexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" value="homosexual" required>
+                            <label class="custom-control-label" for="customControlValidation3">Homosexuel</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            <input <?php echo ($_SESSION["db_infos"]["sexual_orientation"] == "bisexual" ? "checked" : ""); ?> type="radio" class="custom-control-input" id="customControlValidation1" name="radio-stacked" value="bisexual" required>
+                            <label class="custom-control-label" for="customControlValidation1">Bisexuel</label>
+                            <div class="invalid-feedback">Selectionnez votre orientation sexuelle.</div>
+                        </div>
+                        <label for="custom-select">Age</label>
+                        <div class="mb-3">
+                            <select name="age" class="custom-select" required>
+                            <option></option> 
+                            <?php
+                            for ($x = 18; $x <= 100; $x++) {
+                                $selected = "";
+                                if ($_SESSION["db_infos"]["age"] == $x) {
+                                    $selected = 'selected="selected"';
+                                }
+                                echo '<option '.$selected.' value="'.$x.'">'.$x.'</option>';
+                            }
+                            ?>
+
+                            </select>
+                            <div class="invalid-feedback">Selectionnez votre genre.</div>
+                        </div>
+                        <label for="custom-select">Genre</label>
+                        <div class="mb-3">
+                            <select name="gender" class="custom-select" required>
+                            <option></option> 
+                            <option  <?php echo ($_SESSION["db_infos"]["gender"] == "male" ? 'selected="selected"' : ""); ?>  value="1">Homme</option>
+                            <option  <?php echo ($_SESSION["db_infos"]["gender"] == "female" ? 'selected="selected"' : ""); ?>  value="2">Femme</option>
+                            </select>
+                            <div class="invalid-feedback">Selectionnez votre genre.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="validationTextarea">Bio</label>
+                            <textarea name="biography" class="form-control" id="validationTextarea" placeholder="Présentez-vous en quelque mots" required><?php echo $_SESSION["db_infos"]["bio"]; ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="formControlRange" class="labelForm">Centre d'intérêts :</label>
+                            <div name="hobbies" class="tagsHobby" id="tagFilters">
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Sport", 0) !== false ? "active" : "inactive"); ?>">Sport</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Voyage", 0) !== false ? "active" : "inactive"); ?>">Voyage</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Cinema", 0) !== false ? "active" : "inactive"); ?>">Cinéma</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Jeux , 0video") ? "active" : "inactive"); ?>">Jeux video</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Litterature", 0) !== false ? "active" : "inactive"); ?>">Litterature</span>
+                            </div>
+                            <input id="tagsInput" type="hidden" name="tags" value="">
+                        </div>
+                        <button style="margin-top:5px;" type="submit" class="btn btn-primary">Valider profile</button>
+                    </form>
+                    <br>
+                    <div style="border-bottom:solid 1px grey;"></div>
+                    <br>
+                    <h5>Votre emplacement</h5>
+                    <br>
+                    <button onclick="getLocation();" style="margin:5px;" class="btn btn-primary">Geolocalisation automatique</button>
+
+                    <form action="/php/account/update_geolocalisation.php" method="POST">
+                        <input id="latInput" type="hidden" name="latitude" value="">
+                        <input id="longInput" type="hidden" name="longitude" value="">
+                        <button style="margin:5px;" type="submit" class="btn btn-primary">Valider emplacement</button>
+                    </form>
+                    <div id="mapProfile"></div>
+                    <script>
+                        var defaultLatitude = 48.8553944;
+                        var defaultLongitude = 2.3542705;
+                        var latitude = <?php echo ($_SESSION["db_infos"]["latitude"] == null ? 0 : $_SESSION["db_infos"]["latitude"]); ?>;
+                        var longitude = <?php echo ($_SESSION["db_infos"]["longitude"] == null ? 0 : $_SESSION["db_infos"]["longitude"]); ?>;
+                        var mymap = L.map('mapProfile').setView([latitude, longitude], 13);
+                        var marker = undefined;
+                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            tileSize: 512,
+                            zoomOffset: -1,
+                            accessToken: 'your.mapbox.access.token'
+                        }).addTo(mymap);
+                        if (latitude == 0 && longitude == 0) {
+                            mymap.setView([defaultLatitude, defaultLongitude], 13);
+                        } else {
+                            mymap.setView([latitude, longitude], 13);
+                            marker = L.marker([latitude, longitude]).addTo(mymap);
+                        }
+                        document.getElementById("latInput").value = mymap.getCenter().lat;
+                        document.getElementById("longInput").value = mymap.getCenter().lng;
+                        mymap.on('zoomend', function() {
+                            document.getElementById("latInput").value = mymap.getCenter().lat;
+                            document.getElementById("longInput").value = mymap.getCenter().lng;
+                        });
+
+                        mymap.on('dragend', function() {
+                            document.getElementById("latInput").value = mymap.getCenter().lat;
+                            document.getElementById("longInput").value = mymap.getCenter().lng;
+                        });
+                        function getLocation() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    var geoLat = position.coords.latitude;
+                                    var geoLong = position.coords.longitude;
+                                    document.getElementById("latInput").value = geoLat;
+                                    document.getElementById("longInput").value = geoLong;
+                                    mymap.setView([geoLat, geoLong], 13);
+                                    if (marker != undefined) {
+                                        mymap.removeLayer(marker);
+                                    }
+                                    marker = L.marker([geoLat, geoLong]).addTo(mymap);
+                                }, function() {
+                                    
+                                });
+                            } else {
+                                x.innerHTML = "Geolocation is not supported by this browser.";
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
     </div>
     <script>
+function bodyOnload() {
+    refreshTagsInputs()
+}
+
+
+
+function refreshTagsInputs() {
+    var tags = document.getElementsByClassName("badge-pill");
+    var activeTags = [];
+    for (var i = 1; i < tags.length; i++) {
+        if (tags[i].classList.contains("badge-item-active")) {
+            activeTags.push(tags[i].innerText);
+        }
+    }
+    document.getElementById("tagsInput").value = activeTags.join(',');
+}
 
 function imgSelectChanged(select) {
     var imgId = parseInt(select.value);
@@ -215,7 +271,6 @@ function imgSelectChanged(select) {
 function tagClicked(span) {
     var tag = span.innerText;
     if (tag != undefined) {
-        console.log(span.classList);
         var newClass = "badge-item-active";
         if (span.classList.contains("badge-item-active")) {
             span.classList.remove("badge-item-active");
@@ -225,6 +280,7 @@ function tagClicked(span) {
         }
         span.classList.add(newClass);
     }
-}
+    refreshTagsInputs();
+ }
     </script>
 </body>
