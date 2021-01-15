@@ -34,7 +34,7 @@ if (isset($_GET["user_id"]) && is_numeric($_GET["user_id"])) {
             }
 
             $user_infos["liked"] = false;
-            $stmt_check_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure;");
+            $stmt_check_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure AND active=1;");
             $stmt_check_like->execute();
             if (($query = $stmt_check_like->fetch())) {
                 $user_infos["liked"] = true;
@@ -268,10 +268,13 @@ var userId = <?php echo $user_infos["id"]; ?>;
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
                 <div class="row text-center" <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
-                    <div class="col">
-                        <button id="likeButton" type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
+                    <div id="likeButton" class="col" <?php echo ($user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
+                        <button  type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
                     </div>
-                    <div class="col">
+                    <div id="removeLikeButton" class="col" <?php echo (!$user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
+                        <button type="button" onclick="unlikeProfile();" class="btn btn-primary">Remove Like</button>
+                    </div>
+                    <div class="col"  <?php echo (!$user_infos["matched"] ? 'style="display:none;"' : ''); ?>>
                         <button type="button" class="btn btn-primary">Chat</button>
                     </div>
                 </div>
@@ -328,6 +331,18 @@ var userId = <?php echo $user_infos["id"]; ?>;
         </div>
     </div>
     <script>
+        function unlikeProfile() {
+            if (userId != undefined) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost/php/interactions/remove_like_user.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    document.getElementById("likeButton").style.display = "";
+                    document.getElementById("removeLikeButton").style.display = "none";
+                };
+                xhr.send('user_id=' + userId);
+            }
+        }
         function likeProfile() {
             if (userId != undefined) {
                 var xhr = new XMLHttpRequest();
@@ -337,8 +352,9 @@ var userId = <?php echo $user_infos["id"]; ?>;
                     var result = JSON.parse(this.responseText);
                     console.log(result);
                     if (result.liked) {
-                        document.getElementById("likeButton").innerText = "Already liked";
-                        document.getElementById("likeButton").disabled = true;
+
+                        document.getElementById("likeButton").style.display = "none";
+                        document.getElementById("removeLikeButton").style.display = "";
                     }
                 };
                 xhr.send('user_id=' + userId);

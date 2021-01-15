@@ -57,7 +57,7 @@ if (isset($_SESSION["user_id"])) {
     if (($query = $stmt_likes_total->fetch())) {
         $data["likes"]["total"] = $query[0];
     }
-    $stmt_likes = $bdd->prepare("SELECT users.first_name, users.image1, notif_likes.id, notif_likes.dateadded, notif_likes.from_user, notif_likes.to_user, notif_likes.seen FROM notif_likes
+    $stmt_likes = $bdd->prepare("SELECT users.first_name, users.image1, notif_likes.id, notif_likes.dateadded, notif_likes.from_user, notif_likes.to_user, notif_likes.seen, notif_likes.active FROM notif_likes
         LEFT JOIN users ON notif_likes.from_user=users.id WHERE notif_likes.to_user='$_SESSION[user_id]' AND notif_likes.seen='0' ORDER BY notif_likes.dateadded DESC LIMIT $limit_max;");
     $stmt_likes->execute();
     while (($query = $stmt_likes->fetch())) {
@@ -66,6 +66,7 @@ if (isset($_SESSION["user_id"])) {
         $like["from"] = $query["first_name"];
         $like["img"] = $query["image1"];
         $like["id"] = $query["id"];
+        $like["active"] = $query["active"];
         array_push($data["likes"]["list"], $like);
         $data["likes"]["total_display"]++;
     }

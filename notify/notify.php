@@ -21,7 +21,7 @@ while (($query = $stmt_profile_views->fetch())) {
     array_push($profile_views, $profile_view);
 }
 
-$stmt_likes = $bdd->prepare("SELECT users.first_name, users.image1, notif_likes.id, notif_likes.dateadded, notif_likes.from_user, notif_likes.to_user, notif_likes.seen FROM notif_likes
+$stmt_likes = $bdd->prepare("SELECT users.first_name, users.image1, notif_likes.id, notif_likes.dateadded, notif_likes.from_user, notif_likes.to_user, notif_likes.seen, notif_likes.active FROM notif_likes
         LEFT JOIN users ON notif_likes.from_user=users.id WHERE notif_likes.to_user='$_SESSION[user_id]' ORDER BY notif_likes.dateadded DESC;");
 $stmt_likes->execute();
 while (($query = $stmt_likes->fetch())) {
@@ -31,6 +31,7 @@ while (($query = $stmt_likes->fetch())) {
     $like["from_id"] = $query["from_user"];
     $like["img"] = $query["image1"];
     $like["id"] = $query["id"];
+    $like["active"] = $query["active"];
     array_push($likes, $like);
 }
 
@@ -84,10 +85,14 @@ if (isset($_SESSION["notify_focus"])) {
                         <div class="tab-pane fade <?php echo ($focus == 'likes' ? "show active" : ""); ?>" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                             <?php
                             foreach ($likes as &$value) {
+                                $like_type = "a liké";
+                                if ($value["active"] == 0) {
+                                    $like_type = "ne like plus";
+                                }
                                 echo '<div id="vue1" style="border-bottom: 1px solid lightgrey;">
                                         <a class="dropdown-item wsInitial" href="/usersProfiles/index.php?user_id='.$value["from_id"].'">
                                             <img class="image-circle" alt="100x100" src="'.$value["img"].'" data-holder-rendered="true">
-                                            <div class="nameNotif text-break">'.$value["from"].' a liké votre profile</div>
+                                            <div class="nameNotif text-break">'.$value["from"].' '.$like_type.' votre profile</div>
                                             <div class="showTimeFrom">'.$value["relative_date"].'</div>
                                         </a>
                                     </div>';
