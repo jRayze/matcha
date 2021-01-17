@@ -15,9 +15,7 @@ if (isset($_SESSION["user_id"])) {
                     $check = getimagesize($_FILES["image"]["tmp_name"]);
                     $data = file_get_contents($_FILES["image"]["tmp_name"]);
                     $final_img = "data:image/png;base64," . base64_encode($data);
-
                     $img_field = "image".$img_id;
-
                     $bdd = get_connection();
                     $stmt = $bdd->prepare("UPDATE users SET $img_field='$final_img' WHERE id=$_SESSION[user_id];");
                     $stmt->execute();
@@ -34,13 +32,44 @@ if (isset($_SESSION["user_id"])) {
                             $stmt->execute();
                         }
                     }
+                } else {
+                    $_SESSION["update_profile_error"] = "Invalid file extension";
                 }
             }
         } else {
-            //echo "file too big";
+            $_SESSION["update_profile_error"] = "File too big";
         }
-        
     }
 }
+
+function resizeImage($filename, $max_width, $max_height)
+{
+    list($orig_width, $orig_height) = getimagesize($filename);
+
+    $width = $orig_width;
+    $height = $orig_height;
+
+    # taller
+    if ($height > $max_height) {
+        $width = ($max_height / $height) * $width;
+        $height = $max_height;
+    }
+
+    # wider
+    if ($width > $max_width) {
+        $height = ($max_width / $width) * $height;
+        $width = $max_width;
+    }
+
+    $image_p = imagecreatetruecolor($width, $height);
+
+    $image = imagecreatefromjpeg($filename);
+
+    imagecopyresampled($image_p, $image, 0, 0, 0, 0,
+                                     $width, $height, $orig_width, $orig_height);
+
+    return $image_p;
+}
+
 header('Location: /profile');
 ?>

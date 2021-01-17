@@ -1,7 +1,7 @@
 <div class="container py-5 px-4">
   <!-- For demo purpose-->
   <div class="text-center">
-    <div class="title" style="padding-bottom: 3px; padding-top: 10px;">Vos chats <div class="nameUser"><?=$_SESSION["user"]?></div></div>
+    <div class="title" style="padding-bottom: 3px; padding-top: 10px;">Vos chats</div>
     </div>
 
   <div class="row rounded-lg overflow-hidden shadow" style="margin-top: 5px;">
@@ -144,6 +144,7 @@ function sent_message_html(item) {
 }
 
 function recieved_message_html(item, circle_img) {
+    console.log(item);
     var html = '<div class="media w-50 mb-3"><img src="' + circle_img + '" alt="user" width="50" class="rounded-circle">';
             html += '<div class="media-body">';
                 html += '<div class="bg-primary rounded py-2 px-3 mb-2">';

@@ -2,10 +2,6 @@
 include "../template/start.php";
 session_start();
 
-if (!isset($_GET["key"]) || !isset($_GET["username"])) {
-    $_SESSION["reset_password_url_error"] = "Invalid URL";
-}
-
 ?>
 <body class="bodyLogin">
     <form class="form-signin" action="/php/account/change_password.php" method="post">
@@ -24,12 +20,12 @@ if (!isset($_GET["key"]) || !isset($_GET["username"])) {
             ?>
         </label>
         <input name="username" type="hidden" value="<?php
-        if (!isset($_SESSION["reset_password_url_error"])) {
+        if (!isset($_SESSION["reset_password_url_error"]) && isset($_GET["username"])) {
             echo $_GET["username"];
         }
         ?>">
         <input name="key" type="hidden" value="<?php
-        if (!isset($_SESSION["reset_password_url_error"])) {
+        if (!isset($_SESSION["reset_password_url_error"]) && isset($_GET["key"])) {
             echo $_GET["key"];
         }
         ?>">

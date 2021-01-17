@@ -9,7 +9,7 @@ if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
     $stmt->execute();
     if (($query = $stmt->fetch())) {
         $recovery_url = password_hash($query["email"], PASSWORD_DEFAULT);
-        $stmt = $bdd->prepare("UPDATE users SET password_recovery_url='$recovery_url';");
+        $stmt = $bdd->prepare("UPDATE users SET password_recovery_url='$recovery_url' WHERE id=$query[id];");
         $stmt->execute();
 
         $message = '

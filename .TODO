@@ -11,12 +11,12 @@ Age field on /profile/ page                                             ✓
 
 profile_complete field                                                  ✓
 
-fix picture carousel on mobile
+fix picture carousel on mobile                                          ✓
 
 generate likes & match & chat with generated users                      ✓
 
-notification like => don't like
+notification like => don't like                                         ✓
 
 select image to replace with uploaded image (1st selected by default)   ✓
 
-like => remove like feature with notification update in db
+like => remove like feature with notification update in db              ✓

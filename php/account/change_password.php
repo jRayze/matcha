@@ -21,14 +21,18 @@ if (!isset($_POST["username"]) || !isset($_POST["key"]) || !isset($_POST["passwo
             $stmt = $bdd->prepare("SELECT * FROM users WHERE username='$_POST[username]';");
             $stmt->execute();
             if (($query = $stmt->fetch())) {
-                
                 if ($query["password_recovery_url"] === $_POST["key"]) {
                     $hashed_pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                    $stmt = $bdd->prepare("UPDATE users SET password='$hashed_pass',password_recovery_url='' WHERE username='$_POST[username]';");
-                    $stmt->execute();
-                    $_SESSION["password_updated"] = "Your password has been changed";
+
+                    if (password_verify($_POST["password"], $query["password"])) {
+                        $_SESSION["reset_password_error"] = "Password must be different from previous password";
+                    } else {
+                        $stmt = $bdd->prepare("UPDATE users SET password='$hashed_pass',password_recovery_url='' WHERE username='$_POST[username]';");
+                        $stmt->execute();
+                        $_SESSION["password_updated"] = "Your password has been changed";
+                    }
                 } else {
-                    $_SESSION["reset_password_error"] = "Invalid key url";
+                    $_SESSION["reset_password_error"] = "Invalid key url".$_POST["key"];
                 }
             } else {
                 $_SESSION["reset_password_error"] = "Invalid username url";
@@ -37,7 +41,7 @@ if (!isset($_POST["username"]) || !isset($_POST["key"]) || !isset($_POST["passwo
     }
 }
 if (isset($_SESSION["reset_password_error"])) {
-    header('Location: /login/resetPassword.php');
+    header('Location: /login/resetPassword.php?key='.$_POST["key"]."&username=".$_POST["username"]);
 } else {
     header('Location: /login/login.php');
 }

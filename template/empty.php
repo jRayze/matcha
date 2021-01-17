@@ -1,3 +1,5 @@
 <?php
-include $_SESSION["body_page"];
+if (isset($_SESSION["body_page"])) {
+    include $_SESSION["body_page"];
+}
 ?>

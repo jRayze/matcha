@@ -6,7 +6,7 @@
 <body class="bodyProfile" onload="bodyOnload();">
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title">
-            Profile de <div class="nameUser"><?=$_SESSION["user"]?></div>
+            <a href="/usersProfiles/index.php?user_id=<?php echo $_SESSION["user_id"]; ?>">Votre profil</a>
         </div>
         <div class="col missing-infos">
             <?php
@@ -15,6 +15,22 @@
                 foreach ($_SESSION["missing_profile_infos"] as &$value) {
                     echo '<div class="row missing-info-item">• '.$value.'</div>';
                 }
+            }
+            ?>
+        </div>
+        <div class="col missing-infos">
+            <?php
+            if (isset($_SESSION["update_profile_error"])) {
+                echo '<div class="row missing-info-item">• '.$_SESSION["update_profile_error"].'</div>';
+                unset($_SESSION["update_profile_error"]);
+            }
+            ?>
+        </div>
+        <div class="col missing-infos">
+            <?php
+            if (isset($_SESSION["upload_picture_error"])) {
+                echo '<div class="row missing-info-item">• '.$_SESSION["upload_picture_error"].'</div>';
+                unset($_SESSION["upload_picture_error"]);
             }
             ?>
         </div>
@@ -95,7 +111,7 @@
                         </div>
                         <div class="custom-file mb-3">
                             <input name="image" type="file" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Selectionnez une photo...</label>
+                            <label class="custom-file-label" for="validatedCustomFile" id="customFileLabel">Selectionnez une photo...</label>
                             <div class="invalid-feedback">Selectionnez des photos au format .jpeg, .png, .gif.</div>
                         </div>
                         <button style="margin-top:5px;" type="submit" class="btn btn-primary">Upload Image</button>
@@ -245,6 +261,9 @@
     <script>
 function bodyOnload() {
     refreshTagsInputs()
+    document.getElementById('validatedCustomFile').onchange = function () {
+        document.getElementById('customFileLabel').innerText = this.value;
+    };
 }
 
 

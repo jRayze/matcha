@@ -18,7 +18,14 @@ if (isset($_POST["email"]) && strlen($_POST["email"]) && isset($_POST["password"
                 $_SESSION["body_page"] = "accueil/accueil.php";
                 $_SESSION["filter_tags"] = array();
                 $_SESSION["popularity_filter"] = 0;
+                $_SESSION["blocked_users"] = array();
                 $_SESSION["db_infos"] = $query;
+
+                $stmt_blocked_users = $bdd->prepare("SELECT * FROM blocked_relations WHERE blocking_user=$_SESSION[user_id];");
+                $stmt_blocked_users->execute();
+                while (($query_blocked = $stmt_blocked_users->fetch())) {
+                    array_push($_SESSION["blocked_users"], $query_blocked["blocked_user"]);
+                }
 
                 if (profile_is_complete($query)) {
                     $stmt = $bdd->prepare("UPDATE users SET profile_complete=1 WHERE id=$query[id];");

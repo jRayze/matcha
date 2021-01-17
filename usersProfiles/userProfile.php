@@ -136,7 +136,15 @@ var userId = <?php echo $user_infos["id"]; ?>;
                     
                     <div <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
                         <div class="row align-items-center justify-content-center">
-                            <button style="width:49%; margin: 2px;" id="bloquer" type="button" class="btn btn-danger">Bloquer</button>
+                            <button onclick="blockUser(this);" style="width:49%; margin: 2px;" id="bloquer" type="button" class="btn btn-danger">
+                                <?php
+                                    if (in_array($user_infos["id"], $_SESSION["blocked_users"])) {
+                                        echo "Débloquer";
+                                    } else {
+                                        echo "Bloquer";
+                                    }
+                                ?>
+                            </button>
                         </div>
                         <div class="row align-items-center justify-content-center">
                             <button style="width:49%; margin: 2px;" id="signaler" type="button" class="btn btn-warning">Signaler</button>
@@ -186,27 +194,6 @@ var userId = <?php echo $user_infos["id"]; ?>;
                             outputBox.value = "Vous avez cliqué sur le bouton " + favDialog.returnValue + " !";
                         });
                         })();
-                </script>
-                <div id="mapid"></div>
-                <script>
-                    var defaultLatitude = 48.8553944;
-                    var defaultLongitude = 2.3542705;
-                    var latitude = <?php echo ($user_infos["latitude"] == null ? 0 : $user_infos["latitude"]); ?>;
-                    var longitude = <?php echo ($user_infos["longitude"] == null ? 0 : $user_infos["longitude"]); ?>;
-                    var mymap = L.map('mapid').setView([latitude, longitude], 13);
-                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                        maxZoom: 18,
-                        id: 'mapbox/streets-v11',
-                        tileSize: 512,
-                        zoomOffset: -1,
-                        accessToken: 'your.mapbox.access.token'
-                    }).addTo(mymap);
-                    if (latitude == 0 && longitude == 0) {
-                        mymap.setView([defaultLatitude, defaultLongitude], 13);
-                    } else {
-                        mymap.setView([latitude, longitude], 13);
-                    }
                 </script>
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main">
@@ -267,27 +254,57 @@ var userId = <?php echo $user_infos["id"]; ?>;
                 <br >
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
-                <div class="row text-center" <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
-                    <div id="likeButton" class="col" <?php echo ($user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
-                        <button  type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
-                    </div>
-                    <div id="removeLikeButton" class="col" <?php echo (!$user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
-                        <button type="button" onclick="unlikeProfile();" class="btn btn-primary">Remove Like</button>
-                    </div>
-                    <div class="col"  <?php echo (!$user_infos["matched"] ? 'style="display:none;"' : ''); ?>>
-                        <button type="button" class="btn btn-primary">Chat</button>
+                <div class="row text-center" <?php echo (!isset($user_infos["matched"]) || !$user_infos["matched"] ? 'style="display:none;"' : 'style="font-weight: bold;"'); ?>>
+                    <div class="col">
+                        C'est un match!
                     </div>
                 </div>
-                <div class="">
-                    <h5>Bio : </h5>
-                    <p class="font-weight-lighter"><?php echo $user_infos["bio"]; ?></p>
+                <div class="row text-center" <?php echo ($user_infos["id"] == $_SESSION["user_id"] ? 'style="display:none;"' : ''); ?>>
+                    <div id="likeButton" class="col" <?php echo (!isset($user_infos["liked"]) || $user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
+                        <button  type="button" onclick="likeProfile();" class="btn btn-primary">Like</button>
+                    </div>
+                    <div id="removeLikeButton" class="col" <?php echo (!isset($user_infos["liked"]) || !$user_infos["liked"] ? 'style="display:none;"' : ''); ?>>
+                        <button type="button" onclick="unlikeProfile();" class="btn btn-primary">Remove Like</button>
+                    </div>
+                    <div class="col" <?php echo (!isset($user_infos["matched"]) || !$user_infos["matched"] ? 'style="display:none;"' : ''); ?>>
+                        <a href="/php/redirections/chat_conv.php?conv_id=<?php echo $user_infos["id"]; ?>">
+                            <button type="button" class="btn btn-primary">Chat</button>
+                        </a>
+                    </div>
                 </div>
                 <br >
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
                 <br >
                 <div class="">
-                    <h5>Intéressé par : </h5>
-                    <p class="font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div id="mapUserProfile"></div>
+                    <script>
+                        var defaultLatitude = 48.8553944;
+                        var defaultLongitude = 2.3542705;
+                        var latitude = <?php echo ($user_infos["latitude"] == null ? 0 : $user_infos["latitude"]); ?>;
+                        var longitude = <?php echo ($user_infos["longitude"] == null ? 0 : $user_infos["longitude"]); ?>;
+                        var mymap = L.map('mapUserProfile').setView([latitude, longitude], 13);
+                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiendva2Fyb3MiLCJhIjoiY2tpaXNyMzU1MGtpNTJ6bng4dnlxbXIwbiJ9.CySuMYQGv9x4ToM5s47WRg', {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            tileSize: 512,
+                            zoomOffset: -1,
+                            accessToken: 'your.mapbox.access.token'
+                        }).addTo(mymap);
+                        if (latitude == 0 && longitude == 0) {
+                            mymap.setView([defaultLatitude, defaultLongitude], 13);
+                        } else {
+                            mymap.setView([latitude, longitude], 13);
+                            L.circle([latitude, longitude], {radius: 400}).addTo(mymap);
+                        }
+                    </script>
+                </div>
+                <br >
+                <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
+                <br >
+                <div class="">
+                    <h5>Bio : </h5>
+                    <p class="font-weight-lighter"><?php echo $user_infos["bio"]; ?></p>
                 </div>
                 <br >
                 <div style="border-bottom:1px solid rgba(0,0,0,.125);"></div>
@@ -358,6 +375,35 @@ var userId = <?php echo $user_infos["id"]; ?>;
                     }
                 };
                 xhr.send('user_id=' + userId);
+            }
+        }
+        function blockUser(blockButton) {
+            if (blockButton.innerText == "Bloquer") {
+                if (userId != undefined) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://localhost/php/interactions/block_user.php', true);
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function () {
+                        var result = JSON.parse(this.responseText);
+                        if (result.blocked) {
+                            blockButton.innerText = "Débloquer";
+                        }
+                    };
+                    xhr.send('user_id=' + userId);
+                }
+            } else if (blockButton.innerText == "Débloquer") {
+                if (userId != undefined) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://localhost/php/interactions/unblock_user.php', true);
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function () {
+                        var result = JSON.parse(this.responseText);
+                        if (!result.blocked) {
+                            blockButton.innerText = "Bloquer";
+                        }
+                    };
+                    xhr.send('user_id=' + userId);
+                }
             }
         }
     </script>
