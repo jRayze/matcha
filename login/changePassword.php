@@ -3,20 +3,12 @@ include "../template/start.php";
 session_start();
 ?>
 <body class="bodyLogin">
-    <form class="form-signin" action="/php/account/recover_password.php" method="post">
+    <form class="form-signin" action="/php/account/update_password.php" method="post">
         <label class="error-text">
             <?php
-                if (isset($_SESSION["recover_password_error"])) {
-                    echo $_SESSION["recover_password_error"];
-                    unset($_SESSION["recover_password_error"]);
-                }
-            ?>
-        </label>
-        <label class="success-text">
-            <?php
-                if (isset($_SESSION["recover_password_success"])) {
-                    echo $_SESSION["recover_password_success"];
-                    unset($_SESSION["recover_password_success"]);
+                if (isset($_SESSION["update_password_error"])) {
+                    echo $_SESSION["update_password_error"];
+                    unset($_SESSION["update_password_error"]);
                 }
             ?>
         </label>

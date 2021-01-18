@@ -75,14 +75,14 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Adresse email</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value="<?php echo $_SESSION["db_infos"]["email"]; ?>">
-                    <a href="#">
+                    <a href="/login/changeMail.php">
                         <button style="margin-top:5px;" type="submit" class="btn btn-primary">Changer adresse email</button>
                     </a>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Mot de passe</label>
                     <input type="text" class="form-control" id="exampleInputPassword1" aria-describedby="emailHelp" disabled value="**********">
-                    <a href="#">
+                    <a href="/login/changePassword.php">
                         <button style="margin-top:5px;" type="submit" class="btn btn-primary">Changer mot de passe</button>
                     </a>
                 </div>

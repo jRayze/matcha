@@ -14,6 +14,10 @@ session_start();
         </label>
         <label class="success-text">
             <?php
+            if (isset($_SESSION["email_changed"])) {
+                echo $_SESSION["email_changed"];
+                unset($_SESSION["email_changed"]);
+            }
             if (isset($_SESSION["password_updated"])) {
                 echo $_SESSION["password_updated"];
                 unset($_SESSION["password_updated"]);

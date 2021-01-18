@@ -3,20 +3,12 @@ include "../template/start.php";
 session_start();
 ?>
 <body class="bodyLogin">
-    <form class="form-signin" action="/php/account/recover_password.php" method="post">
+    <form class="form-signin" action="/php/account/change_email.php" method="post">
         <label class="error-text">
             <?php
-                if (isset($_SESSION["recover_password_error"])) {
-                    echo $_SESSION["recover_password_error"];
-                    unset($_SESSION["recover_password_error"]);
-                }
-            ?>
-        </label>
-        <label class="success-text">
-            <?php
-                if (isset($_SESSION["recover_password_success"])) {
-                    echo $_SESSION["recover_password_success"];
-                    unset($_SESSION["recover_password_success"]);
+                if (isset($_SESSION["change_email_error"])) {
+                    echo $_SESSION["change_email_error"];
+                    unset($_SESSION["change_email_error"]);
                 }
             ?>
         </label>
@@ -24,10 +16,6 @@ session_start();
         <h5 class="h5 mb-3 font-weight-normal">Veuilez saisir votre mot de passe.</h5>
         <label for="inputPassword" class="sr-only">Mot de passe</label>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required autofocus>
-        <br >
-        <h5 class="h5 mb-3 font-weight-normal">Veuilez saisir votre date de naissance.</h5>
-        <label for="inputBirthDate" class="sr-only">Date de naissance</label>
-        <input name="birthDate" type="date" id="inputBirthDate" class="form-control" placeholder="Date de naissance" required autofocus>
         <br >
         <h5 class="h5 mb-3 font-weight-normal">Veuilez saisir votre nouvelle adresse mail.</h5>
         <label for="inputNewEmail" class="sr-only">Adresse E-mail</label>
