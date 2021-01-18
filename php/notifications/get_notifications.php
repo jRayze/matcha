@@ -48,8 +48,13 @@ if (isset($_SESSION["user_id"])) {
         $profile_view["from"] = $query["first_name"];
         $profile_view["img"] = $query["image1"];
         $profile_view["id"] = $query["id"];
-        array_push($data["profile_views"]["list"], $profile_view);
-        $data["profile_views"]["total_display"]++;
+        if (!in_array($query["from_user"], $_SESSION["blocked_users"])) {
+            array_push($data["profile_views"]["list"], $profile_view);
+            $data["profile_views"]["total_display"]++;
+        } else {
+            $data["profile_views"]["total"]--;
+        }
+        
     }
 
     $stmt_likes_total = $bdd->prepare("SELECT COUNT(*) FROM notif_likes WHERE to_user='$_SESSION[user_id]' AND seen=0;");
@@ -67,8 +72,12 @@ if (isset($_SESSION["user_id"])) {
         $like["img"] = $query["image1"];
         $like["id"] = $query["id"];
         $like["active"] = $query["active"];
-        array_push($data["likes"]["list"], $like);
-        $data["likes"]["total_display"]++;
+        if (!in_array($query["from_user"], $_SESSION["blocked_users"])) {
+            array_push($data["likes"]["list"], $like);
+            $data["likes"]["total_display"]++;
+        } else {
+            $data["likes"]["total"]--;
+        }
     }
 
     $stmt_matches_total = $bdd->prepare("SELECT COUNT(*) FROM notif_matches WHERE to_user='$_SESSION[user_id]' AND seen=0;");
@@ -85,8 +94,12 @@ if (isset($_SESSION["user_id"])) {
         $match["from"] = $query["first_name"];
         $match["img"] = $query["image1"];
         $match["id"] = $query["id"];
-        array_push($data["matches"]["list"], $match);
-        $data["matches"]["total_display"]++;
+        if (!in_array($query["from_user"], $_SESSION["blocked_users"])) {
+            array_push($data["matches"]["list"], $match);
+            $data["matches"]["total_display"]++;
+        } else {
+            $data["matches"]["total"]--;
+        }
     }
 
     $q = "SELECT ccr.conv_id,
@@ -125,13 +138,16 @@ if (isset($_SESSION["user_id"])) {
                 }
             }
             $chat["message"] = $msg;
-            array_push($data["chat"]["list"], $chat);
-            $data["chat"]["total_display"]++;
+            
+            if (!in_array($query["from_user"], $_SESSION["blocked_users"])) {
+                array_push($data["chat"]["list"], $chat);
+                $data["chat"]["total_display"]++;
 
-            $data["chat"]["total"]++;
+                $data["chat"]["total"]++;
+            }
         }
     }
 }
-
+$data["blocked_users"] = $_SESSION["blocked_users"];
 echo json_encode($data);
 ?>

@@ -83,7 +83,9 @@ if (isset($_SESSION["user_id"])) {
                 $result["image"] = $query["image1"];
 
                 if (count($data["results"]) < $_SESSION["max_results"]) {
-                    array_push($data["results"], $result);
+                    if (!in_array($query["id"], $_SESSION["blocked_users"])) {
+                        array_push($data["results"], $result);
+                    }
                 }
                 $data["result_count"]++;
             }

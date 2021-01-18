@@ -18,6 +18,9 @@ while (($query = $stmt_profile_views->fetch())) {
     $profile_view["from_id"] = $query["from_user"];
     $profile_view["img"] = $query["image1"];
     $profile_view["id"] = $query["id"];
+    if (in_array($query["from_user"], $_SESSION["blocked_users"])) {
+        $profile_view["from"].= " (bloqué)";
+    }
     array_push($profile_views, $profile_view);
 }
 
@@ -32,6 +35,9 @@ while (($query = $stmt_likes->fetch())) {
     $like["img"] = $query["image1"];
     $like["id"] = $query["id"];
     $like["active"] = $query["active"];
+    if (in_array($query["from_user"], $_SESSION["blocked_users"])) {
+        $like["from"].= " (bloqué)";
+    }
     array_push($likes, $like);
 }
 
@@ -45,6 +51,9 @@ $stmt_matches = $bdd->prepare("SELECT users.first_name, users.image1, notif_matc
         $match["from_id"] = $query["from_user"];
         $match["img"] = $query["image1"];
         $match["id"] = $query["id"];
+        if (in_array($query["from_user"], $_SESSION["blocked_users"])) {
+            $match["from"].= " (bloqué)";
+        }
         array_push($matches, $match);
     }
 
