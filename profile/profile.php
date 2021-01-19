@@ -5,8 +5,8 @@
 </script>
 <body class="bodyProfile" onload="bodyOnload();">
     <div class="container-fluid" style="margin-top: 56px;">
-        <div class="title">
-            <a href="/usersProfiles/index.php?user_id=<?php echo $_SESSION["user_id"]; ?>">Votre profil</a>
+        <div class="title" <?php echo ((isset($_SESSION["missing_profile_infos"]) && count($_SESSION["missing_profile_infos"]) > 0) ? "style='display:none;'" : ""); ?> >
+            <a href="/usersProfiles/index.php?user_id=<?php echo $_SESSION["user_id"]; ?>">Aperçu du profil</a>
         </div>
         <div class="col missing-infos">
             <?php

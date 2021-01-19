@@ -42,7 +42,8 @@ if (isset($_SESSION["user_id"])) {
         age <= $user_search_settings[filter_age_max] AND
         sexual_orientation='$user_search_settings[sexual_orientation_filter]' AND
         id != $_SESSION[user_id] AND
-        profile_complete=1";
+        profile_complete=1 AND
+        under_investigation=0";
 
     if (isset($_SESSION["filter_tags"]) && count($_SESSION["filter_tags"]) > 0) {
         foreach ($_SESSION["filter_tags"] as $tag) {

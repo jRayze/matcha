@@ -1,7 +1,7 @@
 <?php
 include "../php/database/sql.php";
 include "../php/utils/relative_time.php";
-
+include "../php/utils/report_list.php";
 $user_infos = null;
 
 $sexual_orientation_french = array(
@@ -68,6 +68,7 @@ var userId = <?php echo $user_infos["id"]; ?>;
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
         <div class="title" >Profile de <div class="nameUser"><?php echo $user_infos["first_name"]; ?></div>
+        
             <?php
             $online = false;
             $current_date = new DateTime(date('m/d/Y h:i:s a', time()));
@@ -90,6 +91,13 @@ var userId = <?php echo $user_infos["id"]; ?>;
                 echo '<div class="disconnected" style="font-size: 12px; color: #28a745; margin-top: auto; margin-bottom: auto; margin-left: 10px; color: lightgrey;"><svg style="color: black;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
               </svg> Last connected '.get_relative_time($user_infos["last_activity"]).'</div>';
+            }
+            ?>
+        </div>
+        <div class="title" style="color:red;">
+            <?php
+            if ($user_infos["under_investigation"] == 1) {
+                echo "Ce profil est en cours d'investigation";
             }
             ?>
         </div>
@@ -156,15 +164,16 @@ var userId = <?php echo $user_infos["id"]; ?>;
                         <form method="dialog">
                             <p><label>Motif du signalement :
                             <select>
-                                <option></option>
-                                <option>Language offensant</option>
-                                <option>Photo a caractère pornographique</option>
-                                <option>Il boit du coca cola</option>
+                                <?php
+                                foreach ($report_list as &$value) {
+                                    echo '<option>'.$value.'</option>';
+                                }
+                                ?>
                             </select>
                             </label></p>
                             <menu>
                             <button class="btn btn-danger" value="cancel">Annuler</button>
-                            <button class="btn btn-primary" id="confirmBtn" value="default">Confirmer</button>
+                            <button onclick="reportUser(this);" class="btn btn-primary" id="confirmBtn" value="default">Confirmer</button>
                             </menu>
                         </form>
                     </dialog>
@@ -191,7 +200,9 @@ var userId = <?php echo $user_infos["id"]; ?>;
                         });
                         // Le bouton "Confirmer" déclenche l'évènement "close" sur le dialog avec [method="dialog"]
                         favDialog.addEventListener('close', function onClose() {
-                            outputBox.value = "Vous avez cliqué sur le bouton " + favDialog.returnValue + " !";
+                            if (outputBox != undefined) {
+                                outputBox.value = "Vous avez cliqué sur le bouton " + favDialog.returnValue + " !";
+                            }
                         });
                         })();
                 </script>
@@ -348,6 +359,18 @@ var userId = <?php echo $user_infos["id"]; ?>;
         </div>
     </div>
     <script>
+        function reportUser(button) {
+            console.log(button);
+            if (userId != undefined) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost/php/interactions/report_user.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    console.log(this.responseText);
+                };
+                xhr.send('user_id=' + userId + '&reason=' + button.value);
+            }
+        }
         function unlikeProfile() {
             if (userId != undefined) {
                 var xhr = new XMLHttpRequest();
