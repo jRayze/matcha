@@ -2,8 +2,8 @@
 include "../database/sql.php";
 
 session_start();
-
-if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+$illegal = "#$%^&*()+=-[]';,/{}|:<>?~";
+if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) && !strpbrk($_POST["email"], $illegal)  ) {
     $bdd = get_connection();
     $stmt = $bdd->prepare("SELECT * FROM users WHERE email='$_POST[email]';");
     $stmt->execute();
@@ -34,7 +34,7 @@ if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
         $_SESSION["recover_password_error"] = "Email not found";
     }
 } else {
-    
+    $_SESSION["recover_password_error"] = "You must input a valid email";
 }
 header('Location: /login/recoverPassword.php');
 ?>

@@ -44,7 +44,8 @@ if (isset($_GET["username"]) && strlen($_GET["username"])) {
 }
 
 if (isset($_GET["email"]) && strlen($_GET["email"])) {
-    if (!filter_var($_GET["email"], FILTER_VALIDATE_EMAIL)) {
+    $illegal = "#$%^&*()+=-[]';,/{}|:<>?~";
+    if (!filter_var($_GET["email"], FILTER_VALIDATE_EMAIL) || strpbrk($_GET["email"], $illegal)) {
         array_push($result["registration_error"], "Invalid email");
         $result["valid"] = false;
     } else {

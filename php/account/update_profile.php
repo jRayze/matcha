@@ -11,7 +11,7 @@ if (isset($_SESSION["user_id"])) {
     if (isset($_POST["first_name"]) && strlen($_POST["first_name"])) {
         if (!preg_match('/^[\p{Latin}\s]+$/u', $_POST["first_name"])) {
             $valid = false;
-            $_SESSION["update_profile_error"] = "Illegal character(s) in first name";
+            $_SESSION["update_profile_error"] = "Illegal character(s) in first / last name";
         }
     } else {
         $valid = false;

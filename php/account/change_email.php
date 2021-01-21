@@ -5,7 +5,8 @@ include "../database/sql.php";
 if (isset($_SESSION["user_id"])) {
     if (isset($_POST["email"]) && strlen($_POST["email"]) > 0 &&
         isset($_POST["password"]) && strlen($_POST["password"]) > 0) {
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+            $illegal = "#$%^&*()+=-[]';,/{}|:<>?~";
+        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) || strpbrk($_POST["email"], $illegal)) {
             $_SESSION["change_email_error"] = "Invalid email syntax";
         } else {
             $bdd = get_connection();
