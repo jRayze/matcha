@@ -111,7 +111,7 @@ $_SESSION["max_results"] = 9;
                 </div>
             </div>
             <div class="col-md-9 offset-md-3 offset-sm-12 py-2" id="main">
-                <div class="row" id="userCards">
+                <div class="row" id="userCards" style="margin: 10px;">
                     
                 </div>
                 <button id="displayMoreButton" style="display:none;" class="btn btn-m btn-primary rounded-pill btn-block" id="marge-bot" onclick="applyFilters(true);" type="button">Afficher plus</button>
@@ -237,7 +237,7 @@ function updateRating(start) {
 
 function userCard(user) {
     var html = "";
-    html += '<div class="col-xl-4 col-md-6 col-sm-12" style="margin: auto; padding-bottom: 15px;">';
+    html += '<div class="col-xl-3 col-md-4 col-sm-12" style="margin: 0px; height: 100%; padding-bottom: 15px;">';
         html += '<div class="card">';
             html += '<a href="/usersProfiles/index.php?user_id=' + user.id + '"><img class="card-img-top" src="' + user.image + '" alt="Card image cap"></a>';
             html += '<div class="card-body">';

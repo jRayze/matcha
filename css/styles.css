@@ -1,5 +1,5 @@
 .bodyAccueil {
-  background-image: url(https://th.bing.com/th/id/OIP.pHTvnUj5nhLq-1Gnfm5_DAHaDa?pid=Api&rs=1);
+    background-color: #f7f7f7;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -228,6 +228,7 @@ input[type=range]#input-left::-webkit-slider-thumb {
 @media(min-width: 992px){
     #main .row{
         position:relative;
+        margin:
     }
     #main .col-md-pull-9{
         position:absolute;
@@ -267,7 +268,7 @@ input[type=range]#input-left::-webkit-slider-thumb {
     
 
     #main {
-        margin-top: 340px;
+        margin-top: 40px;
     }
 
     .carousselMedia {
