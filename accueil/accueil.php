@@ -78,7 +78,7 @@ $_SESSION["max_results"] = 9;
                                 <div class="tagsHobby" id="tagFilters">
                                     <span class="badge badge-pill badge-primary badge-item-active">Sport</span>
                                     <span class="badge badge-pill badge-primary badge-item-active">Voyage</span>
-                                    <span class="badge badge-pill badge-primary badge-item-active">Cinéma</span>
+                                    <span class="badge badge-pill badge-primary badge-item-active">Cinema</span>
                                     <span class="badge badge-pill badge-primary badge-item-active">Jeux video</span>
                                     <span class="badge badge-pill badge-primary badge-item-active">Litterature</span>
                                 </div>

@@ -171,6 +171,13 @@ function reload_chat() {
                 }
             });
             document.getElementById("focused_conv_messages").innerHTML = "";
+
+            if (result.focused_chat.conv_id == -1) {
+                document.getElementById("messageInput").disabled = true;
+            } else {
+                document.getElementById("messageInput").disabled = false;
+            }
+
             result.focused_chat.messages.forEach(el => {
                 if (el.sent) {
                     document.getElementById("focused_conv_messages").innerHTML += sent_message_html(el);

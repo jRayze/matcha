@@ -5,7 +5,6 @@ include "./check_missing_infos.php";
 include "../utils/interests.php";
 
 $sexual_orientation_list = array("heterosexual", "homosexual", "bisexual");
-
 if (isset($_SESSION["user_id"])) {
     $valid = true;
     if (isset($_POST["first_name"]) && strlen($_POST["first_name"])) {
@@ -38,6 +37,7 @@ if (isset($_SESSION["user_id"])) {
         $valid = false;
         $_SESSION["update_profile_error"] = "Sexual orientation is empty";
     }
+    
     $age_secure = -1;
     if (isset($_POST["age"]) && is_numeric($_POST["age"])) {
         $age_secure = intval($_POST["age"]);

@@ -1,3 +1,11 @@
+<?php
+$sexual_orientation_french = array(
+    "homosexual" => "Homosexuel",
+    "bisexual" => "Bisexuel",
+    "heterosexual" => "Heterosexuel"
+);
+?>
+
 <link rel="stylesheet" href="/css/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -40,7 +48,13 @@
                     <img class="card-img-top" src="<?php echo $_SESSION["db_infos"]["image1"];?>" alt="Card image cap">
                     <div class="card-body">
                         <div class="nomAge"><?php echo $_SESSION["db_infos"]["first_name"]." ".$_SESSION["db_infos"]["last_name"].", ".$_SESSION["db_infos"]["age"]." ans";?></div>
-                        <div class="genre"><?php echo $_SESSION["db_infos"]["sexual_orientation"]; ?></div>
+                        <div class="genre">
+                        <?php
+                        if ($_SESSION["db_infos"]["sexual_orientation"] !== null) {
+                            echo $sexual_orientation_french[$_SESSION["db_infos"]["sexual_orientation"]];
+                        }
+                        ?>
+                        </div>
                         <div class="rating" style="margin: auto; padding-bottom: 5px;">
                             <?php
                             for ($i = 0; $i < 5; $i++) {
@@ -181,8 +195,8 @@
                             <div name="hobbies" class="tagsHobby" id="tagFilters">
                                 <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Sport", 0) !== false ? "active" : "inactive"); ?>">Sport</span>
                                 <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Voyage", 0) !== false ? "active" : "inactive"); ?>">Voyage</span>
-                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Cinema", 0) !== false ? "active" : "inactive"); ?>">Cinéma</span>
-                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Jeux , 0video") ? "active" : "inactive"); ?>">Jeux video</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Cinema", 0) !== false ? "active" : "inactive"); ?>">Cinema</span>
+                                <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Jeux video") ? "active" : "inactive"); ?>">Jeux video</span>
                                 <span onclick="tagClicked(this);" class="badge badge-pill badge-primary badge-item-<?php echo (strpos($_SESSION["db_infos"]["interests"], "Litterature", 0) !== false ? "active" : "inactive"); ?>">Litterature</span>
                             </div>
                             <input id="tagsInput" type="hidden" name="tags" value="">
