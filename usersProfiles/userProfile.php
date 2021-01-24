@@ -218,23 +218,23 @@ var userId = <?php echo $user_infos["id"]; ?>;
                     </ol>
                     <div class="carousel-inner" style="margin: auto;">
                         <div class="carousel-item active">
-                            <img src="<?php echo $user_infos["image1"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;">
+                            <img src="<?php echo $user_infos["image1"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto; display: flex;">
                             <!--<img src="..." class="d-block w-100" alt="...">-->
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo $user_infos["image2"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;">
+                            <img src="<?php echo $user_infos["image2"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;display: flex;">
                             <!--<img src="..." class="d-block w-100" alt="...">-->
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo $user_infos["image3"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;">
+                            <img src="<?php echo $user_infos["image3"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto; display: flex;">
                             <!--<img src="..." class="d-block w-100" alt="...">-->
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo $user_infos["image4"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;">
+                            <img src="<?php echo $user_infos["image4"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto; display: flex;">
                             <!--<img src="..." class="d-block w-100" alt="...">-->
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo $user_infos["image5"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto;">
+                            <img src="<?php echo $user_infos["image5"]; ?>" alt="..." class="img-thumbnail" style="margin: auto; width: auto; display: flex;">
                             <!--<img src="..." class="d-block w-100" alt="...">-->
                         </div>
                     </div>
