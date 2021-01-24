@@ -237,8 +237,8 @@ function updateRating(start) {
 
 function userCard(user) {
     var html = "";
-    html += '<div class="col-xl-3 col-md-4 col-sm-12" style="margin: 0px; height: 100%; padding-bottom: 15px;">';
-        html += '<div class="card">';
+    html += '<div class="col-xl-3 col-md-4 col-sm-12" style="margin: 0px; padding-bottom: 15px;">';
+        html += '<div class="card" style="height: 100%;">';
             html += '<a href="/usersProfiles/index.php?user_id=' + user.id + '"><img class="card-img-top" src="' + user.image + '" alt="Card image cap"></a>';
             html += '<div class="card-body">';
                 html += '<div class="nomAge">' + user.fullname + ', ' + user.age + ' ans</div>';
