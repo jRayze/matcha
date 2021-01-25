@@ -1,5 +1,6 @@
 <?php
 include "../database/sql.php";
+include "../popularity/popularity_metric.php";
 session_start();
 
 if (isset($_SESSION["user_id"]) && isset($_POST["user_id"]) && is_numeric($_POST["user_id"]) &&
@@ -37,10 +38,8 @@ if (isset($_SESSION["user_id"]) && isset($_POST["user_id"]) && is_numeric($_POST
             }
             $stmt_clear_matches = $bdd->prepare("DELETE FROM notif_matches WHERE from_user=$_SESSION[user_id] AND to_user=$user_id_secure OR from_user=$user_id_secure AND to_user=$_SESSION[user_id];");
             $stmt_clear_matches->execute();
-            
+            calculate_popularity();
         }
-
-        
     }
 }
 ?>

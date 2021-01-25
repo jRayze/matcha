@@ -39,7 +39,7 @@ if (isset($_POST["username"]) && strlen($_POST["username"])) {
 
 if (isset($_POST["email"]) && strlen($_POST["email"])) {
     $illegal = "#$%^&*()+=-[]';,/{}|:<>?~";
-    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) || strpbrk($_GET["email"], $illegal)) {
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) || strpbrk($_POST["email"], $illegal)) {
         $result["valid"] = false;
     } else {
         $bdd = get_connection();
