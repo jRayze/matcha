@@ -21,9 +21,8 @@
     bottom: 0;
     left: 0;
     /*background */
-    background-image: url(https://fermelamarmotte.fr/images/c97b843dd9a2f2443fa42ebe707c14d1.jpg);
+    background-image: url(/img/La-rencontre-amoureuse-780x450.jpg);
     background-repeat: no-repeat;
-    background-size: cover;
     backdrop-filter: contrast(0.5) blur(5px);
     background-position: center center;
     background-attachment: fixed;
@@ -57,7 +56,7 @@
     left: 0;
 
     /*background */
-    background-image: url(https://www.psychonet.fr/wp-content/uploads/2018/10/La-rencontre-amoureuse-780x450.jpg);
+    background-image: url(/img/La-rencontre-amoureuse-780x450.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     backdrop-filter: contrast(0.5) blur(5px);
