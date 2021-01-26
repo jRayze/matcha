@@ -67,7 +67,7 @@ var userId = <?php echo $user_infos["id"]; ?>;
 </script>
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
-        <div class="title" >Profile de <div class="nameUser"><?php echo $user_infos["first_name"]; ?></div>
+        <div class="title" >Profil de <div class="nameUser"><?php echo $user_infos["first_name"]; ?></div>
         
             <?php
             $online = false;
