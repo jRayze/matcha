@@ -1,6 +1,11 @@
+<head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>LoveStation</title>
+    </head>
 <body style="background-color:#444444;">
     <div style="text-align: center;color:white;" id="progressNb">
-        0 / 500
+       0 / 500 profiles generated
     </div>
     <progress style="width:100%" id="progressbar" value="0" max="500"> 0% </progress>
     <div style="text-align: center;color:white; display:none;" id="homeLink">
@@ -9,6 +14,9 @@
 </body>
 <?php
 include "../utils/interests.php";
+include "../popularity/popularity_metric.php";
+include "../chat/create_conversation.php";
+include "sql.php";
 $sexual_orientation_list = array("heterosexual", "homosexual", "bisexual");
 
 try {
@@ -36,9 +44,6 @@ try {
 
     $response = file_get_contents("fakeusers.json");
     $response = json_decode($response);
-
-    
-
 
     foreach ($response->{'results'} as &$value) {
         $first_name = $value->{'name'}->{'first'};
@@ -85,15 +90,72 @@ try {
         echo "
         <script>
             document.getElementById('progressbar').value += 1;
-            document.getElementById('progressNb').innerText = document.getElementById('progressbar').value + ' / ' + 500;
+            document.getElementById('progressNb').innerText = document.getElementById('progressbar').value + ' / ' + 500 + ' profiles generated';
         </script>";
         }
-        echo "
+
+} catch(PDOException $e) {
+    echo "<br>" . $e->getMessage();
+}
+try {
+    $bdd = new PDO("mysql:host=localhost;dbname=matcha", "root", "");
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $bdd->prepare("SELECT id FROM users;");
+    $stmt->execute();
+    
+    $ids = array();
+    while (($query = $stmt->fetch())) {
+        array_push($ids, $query[0]);
+    }
+
+    $total_views = 0;
+    $total_likes = 0;
+    $total_matches = 0;
+    $total_messages = 0;
+    
+    for ($x = 0; $x < count($ids) * 10; $x++) {
+        $user_1 = rand(0, count($ids) - 1);
+        $user_2 = rand(0, count($ids) - 1);
+        if ($user_1 != $user_2) {
+            if (rand(0, 2)) {
+                $total_views++;
+                $stmt_check_profile_view = $bdd->prepare("SELECT * FROM notif_profile_views WHERE from_user=$ids[$user_1] AND to_user=$ids[$user_2];");
+                $stmt_check_profile_view->execute();
+                if (!($query = $stmt_check_profile_view->fetch())) {
+                    $stmt_add_profile_view = $bdd->prepare("INSERT INTO notif_profile_views (from_user, to_user, seen) VALUES ($ids[$user_1], $ids[$user_2], 0);");
+                    $stmt_add_profile_view->execute();
+                    if (rand(0, 2)) {
+                        $stmt_check_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$ids[$user_1] AND to_user=$ids[$user_2];");
+                        $stmt_check_like->execute();
+                        if (!($query = $stmt_check_like->fetch())) {
+                            $total_likes++;
+                            $stmt_add_like = $bdd->prepare("INSERT INTO notif_likes (from_user, to_user) VALUES ($ids[$user_1], $ids[$user_2]);");
+                            $stmt_add_like->execute();
+                            
+                            $stmt_check_mutual_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$ids[$user_2] AND to_user=$ids[$user_1];");
+                            $stmt_check_mutual_like->execute();
+                            if (($query = $stmt_check_mutual_like->fetch())) {
+                                $total_matches++;
+                                $stmt_match1 = $bdd->prepare("INSERT INTO notif_matches (from_user, to_user) VALUES ($ids[$user_1], $ids[$user_2]);");
+                                $stmt_match1->execute();
+                    
+                                $stmt_match2 = $bdd->prepare("INSERT INTO notif_matches (from_user, to_user) VALUES ($ids[$user_2], $ids[$user_1]);");
+                                $stmt_match2->execute();
+                    
+                                create_conversation($ids[$user_1], $ids[$user_2]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    calculate_popularity();
+    echo "
         <script>
-            document.getElementById('progressNb').innerText = document.getElementById('progressbar').value + ' / ' + 500 + ' Setup done!';
             document.getElementById('homeLink').style.display = '';
         </script>";
-
 } catch(PDOException $e) {
     echo "<br>" . $e->getMessage();
 }

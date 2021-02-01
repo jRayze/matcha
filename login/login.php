@@ -30,14 +30,14 @@ session_start();
         </label>
         <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
         <label for="inputEmail" class="sr-only">Adresse E-mail</label>
-        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Adresse E-mail" required autofocus value="<?php
+        <input name="email" type="email" autocomplete="username" id="inputEmail" class="form-control" placeholder="Adresse E-mail" required autofocus value="<?php
             if (isset($_SESSION["account_email"])) {
                 echo $_SESSION["account_email"];
                 unset($_SESSION["account_email"]);
             }
         ?>">
         <label for="inputPassword" class="sr-only">Mot de Passe</label>
-        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+        <input name="password" autocomplete="current-password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required    >
         <button class="btn btn-m btn-primary btn-block" id="marge-bot" type="submit">Se connecter</button>
         <a href="/login/recoverPassword.php">Mot de passe oublié ?</a>
         <br >

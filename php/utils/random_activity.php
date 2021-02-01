@@ -56,25 +56,6 @@ if (isset($_SESSION["user_id"])) {
                         
                                     create_conversation($ids[$user_1], $ids[$user_2]);
                                 }
-                                /*
-                                $stmt_check_conversation = $bdd->prepare("SELECT * FROM chat_conversation_relations WHERE user_id=$ids[$user_1];");
-                                $stmt_check_conversation->execute();
-
-                                if (!($query = $stmt_check_conversation->fetch())) {
-                                    $stmt_check_mutual_like = $bdd->prepare("SELECT * FROM notif_likes WHERE from_user=$ids[$user_2] AND to_user=$ids[$user_1];");
-                                    $stmt_check_mutual_like->execute();
-                                    if (($query = $stmt_check_mutual_like->fetch())) {
-                                        $total_matches++;
-                                        $stmt_match1 = $bdd->prepare("INSERT INTO notif_matches (from_user, to_user) VALUES ($ids[$user_1], $ids[$user_2]);");
-                                        $stmt_match1->execute();
-                            
-                                        $stmt_match2 = $bdd->prepare("INSERT INTO notif_matches (from_user, to_user) VALUES ($ids[$user_2], $ids[$user_1]);");
-                                        $stmt_match2->execute();
-                            
-                                        create_conversation($ids[$user_1], $ids[$user_2]);
-                                    }
-                                }
-                                */
                             }
                         }
                     }
