@@ -15,13 +15,6 @@ if (isset($_GET["count"]) && intval($_GET["count"]) > 0 && intval($_GET["count"]
             $count = intval($_GET["count"]);
             $response = file_get_contents("https://randomuser.me/api/?nat=fr&results=$count&inc=gender,name,location,picture,email,registered");
             $response = json_decode($response);
-
-            $overlay_images = array();
-
-            for ($i = 1; $i <= 5; $i++) {
-                array_push($overlay_images, imagecreatefrompng("../../img/".$i.".png"));
-            }
-
             foreach ($response->{'results'} as &$value) {
                 $first_name = $value->{'name'}->{'first'};
                 $last_name = $value->{'name'}->{'last'};
@@ -44,23 +37,9 @@ if (isset($_GET["count"]) && intval($_GET["count"]) > 0 && intval($_GET["count"]
                 $email = $value->{'email'};
     
                 $type = pathinfo($value->{'picture'}->{'large'}, PATHINFO_EXTENSION);
-                $base64 = 'data:image/'.$type.';base64,'.base64_encode(file_get_contents($value->{'picture'}->{'large'}));
-                
-                $imgs = array();
-
-                for ($i = 1; $i <= 5; $i++) {
-                    $im = imagecreatefromjpeg($value->{'picture'}->{'large'});
-                    imagecopy($im, $overlay_images[$i - 1], 5, 5, 0, 0, 32, 32);
-                    ob_start();
-                    imagepng($im);
-                    $contents = ob_get_contents();
-                    ob_end_clean();
-                    $final_img = "data:image/png;base64,".base64_encode($contents);
-                    echo '<img src="'.$final_img.'">';
-                    array_push($imgs, $final_img);
-                }
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($value->{'picture'}->{'large'}));
     
-                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, image2, image3, image4, image5, popularity, sexual_orientation, bio, interests, profile_complete, password) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$imgs[0]', '$imgs[1]', '$imgs[2]', '$imgs[3]', '$imgs[4]', 0, '$sexual_orientation', '$bio', '$comma_separated', 1, '$2y$10\$D4X5TYUt8aPOyHqvFLGYKulqFx/mEObEH/RxTUYzmGCt3UWDb6.Hq');";
+                $q = "INSERT INTO users (email, first_name, last_name, gender, verified, age, latitude, longitude, image1, image2, image3, image4, image5, popularity, sexual_orientation, bio, interests, profile_complete) VALUES ('$email', '$first_name', '$last_name', '$gender', 1, $age, $latitude, $longitude, '$base64', '$base64', '$base64', '$base64', '$base64', 0, '$sexual_orientation', '$bio', '$comma_separated', 1);";
                 echo $q;
                 $stmt = $bdd->prepare($q);
                 $stmt->execute();
