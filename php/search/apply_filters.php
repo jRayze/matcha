@@ -23,9 +23,9 @@ if (isset($_SESSION["user_id"]) &&
 
     if (isset($_POST["expand_list"])) {
         if ($_POST["expand_list"] == "true") {
-            $_SESSION["max_results"] += 9;
+            $_SESSION["max_results"] += 12;
         } else if ($_POST["expand_list"] == "false") {
-            $_SESSION["max_results"] = 9;
+            $_SESSION["max_results"] = 12;
         }
     }
 

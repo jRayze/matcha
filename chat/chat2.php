@@ -1,7 +1,7 @@
 <div class="container py-5 px-4">
   <!-- For demo purpose-->
   <div class="text-center">
-    <div class="title" style="padding-bottom: 3px; padding-top: 10px;">Vos chats</div>
+    <div class="title" style="padding-bottom: 3px; padding-top: 10px;">Conversations</div>
     </div>
 
   <div class="row rounded-lg overflow-hidden shadow" style="margin-top: 5px;">

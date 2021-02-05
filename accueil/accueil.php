@@ -1,5 +1,5 @@
 <?php
-$_SESSION["max_results"] = 9;
+$_SESSION["max_results"] = 12;
 ?>
 <body class="bodyAccueil">
     <div class="container-fluid" style="margin-top: 56px;">

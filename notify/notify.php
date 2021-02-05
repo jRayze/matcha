@@ -65,7 +65,7 @@ if (isset($_SESSION["notify_focus"])) {
 ?>
 <body class="bodyProfile">
     <div class="container-fluid" style="margin-top: 56px;">
-        <div class="title" id="notifyTitle">Vos notifs <div class="nameUser"><?=$_SESSION["user"]?></div></div>
+        <div class="title" id="notifyTitle">Notifications</div>
         <div class="row">
             <div class="notify row">
                 <div class="col-md-3 col-xs-12" id="borderNotify">
