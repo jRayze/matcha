@@ -1,7 +1,7 @@
 <head>
         <link rel="icon" type="image/png" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>LoveStation</title>
+        <title>Matcha</title>
     </head>
 <body style="background-color:#444444;">
     <div style="text-align: center;color:white;" id="progressNb">

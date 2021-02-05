@@ -7,7 +7,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle navbar-brand text-danger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    LoveStation
+                    Matcha
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #343a40;">
                         <a class="dropdown-item" href="../accueil" style="color: red; border-bottom: 1px solid;">Accueil</a>
